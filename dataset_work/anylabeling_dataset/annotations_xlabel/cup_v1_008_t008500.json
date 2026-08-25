@@ -1,0 +1,38 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": false,
+  "shapes": [
+    {
+      "label": "cup",
+      "shape_type": "rectangle",
+      "flags": {},
+      "points": [
+        [
+          116.15435999999997,
+          37.16543999999999
+        ],
+        [
+          584.46612,
+          37.16543999999999
+        ],
+        [
+          584.46612,
+          1207.9776
+        ],
+        [
+          116.15435999999997,
+          1207.9776
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "attributes": {}
+    }
+  ],
+  "imagePath": "cup_v1_008_t008500.jpg",
+  "imageData": null,
+  "imageHeight": 1280,
+  "imageWidth": 720
+}

@@ -1,0 +1,65 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": false,
+  "shapes": [
+    {
+      "label": "cup",
+      "shape_type": "rectangle",
+      "flags": {},
+      "points": [
+        [
+          106.20180000000002,
+          124.96576000000005
+        ],
+        [
+          524.19132,
+          124.96576000000005
+        ],
+        [
+          524.19132,
+          1038.92032
+        ],
+        [
+          106.20180000000002,
+          1038.92032
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "attributes": {}
+    },
+    {
+      "label": "mouse",
+      "shape_type": "rectangle",
+      "flags": {},
+      "points": [
+        [
+          500.0,
+          462.0
+        ],
+        [
+          720.0,
+          462.0
+        ],
+        [
+          720.0,
+          575.0
+        ],
+        [
+          500.0,
+          575.0
+        ]
+      ],
+      "group_id": null,
+      "description": "Manually confirmed missed background mouse during post-training error review.",
+      "difficult": false,
+      "attributes": {}
+    }
+  ],
+  "imagePath": "cup_v3_002_t003033.jpg",
+  "imageData": null,
+  "imageHeight": 1280,
+  "imageWidth": 720
+}

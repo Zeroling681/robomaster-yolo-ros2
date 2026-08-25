@@ -1,0 +1,41 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": false,
+  "shapes": [
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          117.83018867924537,
+          149.46540880503144
+        ],
+        [
+          1275.0628930817609,
+          149.46540880503144
+        ],
+        [
+          1275.0628930817609,
+          717.3899371069182
+        ],
+        [
+          117.83018867924537,
+          717.3899371069182
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "mouse_v1_011_t013433.jpg",
+  "imageData": null,
+  "imageHeight": 720,
+  "imageWidth": 1280,
+  "description": ""
+}

@@ -1,0 +1,99 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": false,
+  "shapes": [
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          242.14464000000004,
+          148.35392
+        ],
+        [
+          543.59568,
+          148.35392
+        ],
+        [
+          543.59568,
+          448.08
+        ],
+        [
+          242.14464000000004,
+          448.08
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          381.51432000000005,
+          0.2815999999999974
+        ],
+        [
+          708.95448,
+          0.2815999999999974
+        ],
+        [
+          708.95448,
+          129.74591999999998
+        ],
+        [
+          381.51432000000005,
+          129.74591999999998
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          0.0,
+          423.0
+        ],
+        [
+          719.0,
+          423.0
+        ],
+        [
+          719.0,
+          1276.4285714285713
+        ],
+        [
+          0.0,
+          1276.4285714285713
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "cup_v3_029_t036367.jpg",
+  "imageData": null,
+  "imageHeight": 1280,
+  "imageWidth": 720,
+  "description": ""
+}
