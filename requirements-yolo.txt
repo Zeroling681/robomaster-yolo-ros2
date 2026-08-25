@@ -1,0 +1,5 @@
+numpy==1.26.4
+opencv-python==4.10.0.84
+ultralytics==8.4.127
+cffi==2.1.1
+pycairo==1.29.1
