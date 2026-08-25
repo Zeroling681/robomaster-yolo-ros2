@@ -1,0 +1,119 @@
+{
+  "source": "F:\\PycharmProjects\\robomaster\\dataset_work\\anylabeling_dataset",
+  "output": "F:\\PycharmProjects\\robomaster\\dataset_work\\yolo_dataset_v2",
+  "seed": 20260824,
+  "dedupe_iou": 0.9,
+  "image_count": 188,
+  "raw_box_count": 239,
+  "exported_box_count": 233,
+  "class_box_counts": {
+    "cup": 96,
+    "mouse": 137
+  },
+  "split_image_counts": {
+    "test": 18,
+    "train": 132,
+    "val": 38
+  },
+  "split_primary_class_counts": {
+    "test": {
+      "cup": 9,
+      "mouse": 9
+    },
+    "train": {
+      "cup": 67,
+      "mouse": 65
+    },
+    "val": {
+      "cup": 19,
+      "mouse": 19
+    }
+  },
+  "clipped_boxes": [
+    {
+      "file": "cup_v1_016_t015700.json",
+      "shape_index": 0,
+      "label": "cup"
+    },
+    {
+      "file": "cup_v1_029_t028367.json",
+      "shape_index": 1,
+      "label": "mouse"
+    },
+    {
+      "file": "cup_v1_031_t030767.json",
+      "shape_index": 0,
+      "label": "cup"
+    },
+    {
+      "file": "cup_v2_010_t011833.json",
+      "shape_index": 1,
+      "label": "mouse"
+    },
+    {
+      "file": "cup_v2_028_t034633.json",
+      "shape_index": 0,
+      "label": "cup"
+    },
+    {
+      "file": "cup_v2_029_t035700.json",
+      "shape_index": 0,
+      "label": "cup"
+    },
+    {
+      "file": "cup_v3_026_t031967.json",
+      "shape_index": 0,
+      "label": "mouse"
+    },
+    {
+      "file": "mouse_v1_028_t033433.json",
+      "shape_index": 0,
+      "label": "mouse"
+    }
+  ],
+  "removed_duplicate_boxes": [
+    {
+      "file": "cup_v1_001_t000633.json",
+      "label": "cup",
+      "kept_shape_index": 0,
+      "removed_shape_index": 2,
+      "iou": 0.985717
+    },
+    {
+      "file": "cup_v1_002_t002100.json",
+      "label": "cup",
+      "kept_shape_index": 0,
+      "removed_shape_index": 1,
+      "iou": 0.985968
+    },
+    {
+      "file": "cup_v1_003_t002767.json",
+      "label": "cup",
+      "kept_shape_index": 0,
+      "removed_shape_index": 1,
+      "iou": 0.942811
+    },
+    {
+      "file": "cup_v1_024_t024233.json",
+      "label": "cup",
+      "kept_shape_index": 0,
+      "removed_shape_index": 2,
+      "iou": 0.983594
+    },
+    {
+      "file": "cup_v1_025_t025300.json",
+      "label": "cup",
+      "kept_shape_index": 0,
+      "removed_shape_index": 2,
+      "iou": 0.979249
+    },
+    {
+      "file": "cup_v3_014_t016900.json",
+      "label": "cup",
+      "kept_shape_index": 0,
+      "removed_shape_index": 1,
+      "iou": 0.984081
+    }
+  ],
+  "cross_class_overlaps": []
+}
