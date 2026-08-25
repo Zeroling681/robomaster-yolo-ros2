@@ -1,0 +1,32 @@
+[
+  {
+    "id": "mouse_v1",
+    "class_name": "mouse",
+    "source_file": "56a35be4505831b7ee55318c216ca977.mp4"
+  },
+  {
+    "id": "mouse_v2",
+    "class_name": "mouse",
+    "source_file": "90410631bdbc12f59c7d6deef36b2e06.mp4"
+  },
+  {
+    "id": "mouse_v3",
+    "class_name": "mouse",
+    "source_file": "c147c80fdc484e0acd9411f235504bf1.mp4"
+  },
+  {
+    "id": "cup_v1",
+    "class_name": "cup",
+    "source_file": "cca5e7b56d09d535194df2d83fdba777.mp4"
+  },
+  {
+    "id": "cup_v2",
+    "class_name": "cup",
+    "source_file": "e0dbf204ce9e170b75f6a20335ac0d19.mp4"
+  },
+  {
+    "id": "cup_v3",
+    "class_name": "cup",
+    "source_file": "b61396ed5cb25b3e88591abbbd46f248.mp4"
+  }
+]
