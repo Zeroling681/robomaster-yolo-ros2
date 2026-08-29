@@ -1,4 +1,4 @@
 # 有框标注复核
 
-图片数：1000。在 X-AnyLabeling 中打开本目录的 `images/`，标注目录选择 `annotations/`。
+图片数：1023。在 X-AnyLabeling 中打开本目录的 `images/`，标注目录选择 `annotations/`。
 这些图片已有至少一个框，但仍需人工确认类别、边界和遮挡情况。
