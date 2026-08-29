@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 import shutil
@@ -14,6 +15,27 @@ from ultralytics import YOLO
 
 CONFIDENCE_THRESHOLD = 0.50
 MATCH_IOU_THRESHOLD = 0.50
+
+
+def parse_args() -> argparse.Namespace:
+    project_root = Path(__file__).resolve().parents[1]
+    parser = argparse.ArgumentParser(description="Evaluate a YOLO model on the held-out test split.")
+    parser.add_argument(
+        "--dataset",
+        type=Path,
+        default=project_root / "dataset_work" / "yolo_dataset_v2",
+    )
+    parser.add_argument(
+        "--model",
+        type=Path,
+        default=project_root / "runs" / "detect" / "mouse_cup_yolo11n" / "weights" / "best.pt",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=project_root / "runs" / "detect" / "mouse_cup_yolo11n_final_test",
+    )
+    return parser.parse_args()
 
 
 def iou(left: list[float], right: list[float]) -> float:
@@ -83,12 +105,12 @@ def match_predictions(
 
 
 def main() -> None:
-    project_root = Path(__file__).resolve().parents[1]
-    dataset = project_root / "dataset_work" / "yolo_dataset_v2"
+    args = parse_args()
+    dataset = args.dataset.resolve()
     image_dir = dataset / "images" / "test"
     label_dir = dataset / "labels" / "test"
-    model_path = project_root / "runs" / "detect" / "mouse_cup_yolo11n" / "weights" / "best.pt"
-    output = project_root / "runs" / "detect" / "mouse_cup_yolo11n_final_test"
+    model_path = args.model.resolve()
+    output = args.output.resolve()
     all_images_dir = output / "all"
     error_images_dir = output / "errors"
 

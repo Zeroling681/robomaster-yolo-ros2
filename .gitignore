@@ -5,6 +5,9 @@ __pycache__/
 runs/
 *.pt
 *.engine
+results/*.avi
+results/*.onnx
+dataset_work/audit_dataset/yolo_export_v5/images/
 dataset_work/audit_dataset/yolo_export/images/
 dataset_work/audit_dataset/review_missing/images/
 dataset_work/audit_dataset/review_missing/annotations/
