@@ -31,6 +31,35 @@
       "flags": {},
       "attributes": {},
       "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          0.0,
+          505.9523809523809
+        ],
+        [
+          237.8571428571429,
+          505.9523809523809
+        ],
+        [
+          237.8571428571429,
+          819.2857142857143
+        ],
+        [
+          0.0,
+          819.2857142857143
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
     }
   ],
   "imagePath": "cup_video01_0079.jpg",

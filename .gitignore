@@ -5,4 +5,8 @@ __pycache__/
 runs/
 *.pt
 *.engine
-
+dataset_work/audit_dataset/yolo_export/images/
+dataset_work/audit_dataset/review_missing/images/
+dataset_work/audit_dataset/review_missing/annotations/
+dataset_work/audit_dataset/review_with_boxes/images/
+dataset_work/audit_dataset/review_with_boxes/annotations/

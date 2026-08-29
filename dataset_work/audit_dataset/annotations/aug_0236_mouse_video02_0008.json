@@ -5,26 +5,37 @@
   "shapes": [
     {
       "label": "mouse",
-      "shape_type": "rectangle",
-      "flags": {},
+      "score": null,
       "points": [
         [
           128.55384,
           846.1376
         ],
         [
-          451.20887999999997,
-          1113.40672
+          701.6666666666665,
+          846.1376
+        ],
+        [
+          701.6666666666665,
+          1086.9047619047617
+        ],
+        [
+          128.55384,
+          1086.9047619047617
         ]
       ],
       "group_id": null,
       "description": null,
       "difficult": false,
-      "attributes": {}
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
     }
   ],
   "imagePath": "aug_0236_mouse_video02_0008.jpg",
   "imageData": null,
   "imageHeight": 1280,
-  "imageWidth": 720
+  "imageWidth": 720,
+  "description": ""
 }

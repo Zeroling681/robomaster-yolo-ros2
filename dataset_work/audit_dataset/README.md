@@ -33,6 +33,13 @@ powershell -ExecutionPolicy Bypass -File scripts/open_audit_dataset.ps1
 
 注意：当前目录是审计工作集，不应在审核完成前直接用于重新训练。
 
+当前审核汇总：`audit_report.json` 记录 1029 张图片，其中 1028 张已进入
+`yolo_export/`，12 张是确认无目标的空标注负样本，1 张（`neg_lab_mouse.jpg`）
+仍需补一个鼠标框后才能进入训练集。
+
+`yolo_export/` 是本次人工审核后的训练导出，包含 `dataset.yaml`、YOLO 标签、
+导出清单和待处理清单；导出前请先确认 `excluded_pending.csv` 已清空。
+
 ## 只查看有框或漏标
 
 已经生成两个筛选视图：

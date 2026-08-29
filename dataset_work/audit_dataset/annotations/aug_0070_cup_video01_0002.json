@@ -5,26 +5,95 @@
   "shapes": [
     {
       "label": "cup",
-      "shape_type": "rectangle",
-      "flags": {},
+      "score": null,
       "points": [
         [
-          400.87548,
-          0.0006400000000184036
+          -0.8864247619047205,
+          110.47683047619034
         ],
         [
-          708.85332,
-          411.24288
+          334.0476190476189,
+          110.47683047619034
+        ],
+        [
+          334.0476190476189,
+          970.7142857142858
+        ],
+        [
+          -0.8864247619047205,
+          970.7142857142858
         ]
       ],
       "group_id": null,
       "description": null,
       "difficult": false,
-      "attributes": {}
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          546.4285714285713,
+          503.0952380952381
+        ],
+        [
+          719.0,
+          503.0952380952381
+        ],
+        [
+          719.0,
+          818.3333333333331
+        ],
+        [
+          546.4285714285713,
+          818.3333333333331
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          219.7619047619046,
+          158.33333333333337
+        ],
+        [
+          371.19047619047603,
+          158.33333333333337
+        ],
+        [
+          371.19047619047603,
+          257.3809523809524
+        ],
+        [
+          219.7619047619046,
+          257.3809523809524
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
     }
   ],
   "imagePath": "aug_0070_cup_video01_0002.jpg",
   "imageData": null,
   "imageHeight": 1280,
-  "imageWidth": 720
+  "imageWidth": 720,
+  "description": ""
 }

@@ -5,8 +5,7 @@
   "shapes": [
     {
       "label": "mouse",
-      "shape_type": "rectangle",
-      "flags": {},
+      "score": null,
       "points": [
         [
           146.7468,
@@ -14,18 +13,28 @@
         ],
         [
           485.47656,
+          0.0
+        ],
+        [
+          485.47656,
+          133.47584
+        ],
+        [
+          146.7468,
           133.47584
         ]
       ],
       "group_id": null,
       "description": null,
       "difficult": false,
-      "attributes": {}
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
     },
     {
       "label": "cup",
-      "shape_type": "rectangle",
-      "flags": {},
+      "score": null,
       "points": [
         [
           33.09480000000002,
@@ -33,17 +42,58 @@
         ],
         [
           681.66648,
+          264.04736
+        ],
+        [
+          681.66648,
+          949.76128
+        ],
+        [
+          33.09480000000002,
           949.76128
         ]
       ],
       "group_id": null,
       "description": null,
       "difficult": false,
-      "attributes": {}
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          0.0,
+          189.7619047619048
+        ],
+        [
+          278.80952380952374,
+          189.7619047619048
+        ],
+        [
+          278.80952380952374,
+          380.2380952380952
+        ],
+        [
+          0.0,
+          380.2380952380952
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
     }
   ],
   "imagePath": "cup_v3_026_t031967.jpg",
   "imageData": null,
   "imageHeight": 1280,
-  "imageWidth": 720
+  "imageWidth": 720,
+  "description": ""
 }

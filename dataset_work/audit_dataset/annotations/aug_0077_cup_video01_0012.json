@@ -5,26 +5,37 @@
   "shapes": [
     {
       "label": "cup",
-      "shape_type": "rectangle",
-      "flags": {},
+      "score": null,
       "points": [
         [
           224.65152,
           157.15263999999996
         ],
         [
-          720.0,
-          942.4032
+          715.0,
+          157.15263999999996
+        ],
+        [
+          715.0,
+          945.952380952381
+        ],
+        [
+          224.65152,
+          945.952380952381
         ]
       ],
       "group_id": null,
       "description": null,
       "difficult": false,
-      "attributes": {}
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
     }
   ],
   "imagePath": "aug_0077_cup_video01_0012.jpg",
   "imageData": null,
   "imageHeight": 1280,
-  "imageWidth": 720
+  "imageWidth": 720,
+  "description": ""
 }

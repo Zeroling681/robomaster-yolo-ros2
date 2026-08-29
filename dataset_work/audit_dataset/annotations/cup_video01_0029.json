@@ -5,26 +5,95 @@
   "shapes": [
     {
       "label": "cup",
-      "shape_type": "rectangle",
-      "flags": {},
+      "score": null,
       "points": [
         [
-          5.839920000000005,
-          2.2879999999999967
+          456.9047619047617,
+          -0.3310476190475953
         ],
         [
-          329.27112,
-          300.23744
+          720.7949295238094,
+          -0.3310476190475953
+        ],
+        [
+          720.7949295238094,
+          762.1428571428572
+        ],
+        [
+          456.9047619047617,
+          762.1428571428572
         ]
       ],
       "group_id": null,
       "description": null,
       "difficult": false,
-      "attributes": {}
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          0.0,
+          386.90476190476187
+        ],
+        [
+          134.04761904761892,
+          386.90476190476187
+        ],
+        [
+          134.04761904761892,
+          651.6666666666665
+        ],
+        [
+          0.0,
+          651.6666666666665
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          0.0,
+          201.19047619047623
+        ],
+        [
+          269.2857142857142,
+          201.19047619047623
+        ],
+        [
+          269.2857142857142,
+          366.9047619047619
+        ],
+        [
+          0.0,
+          366.9047619047619
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
     }
   ],
   "imagePath": "cup_video01_0029.jpg",
   "imageData": null,
   "imageHeight": 1280,
-  "imageWidth": 720
+  "imageWidth": 720,
+  "description": ""
 }

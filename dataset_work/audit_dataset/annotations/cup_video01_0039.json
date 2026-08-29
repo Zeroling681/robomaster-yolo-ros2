@@ -31,6 +31,35 @@
       "flags": {},
       "attributes": {},
       "kie_linking": []
+    },
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          464.5238095238094,
+          266.9047619047619
+        ],
+        [
+          719.0,
+          266.9047619047619
+        ],
+        [
+          719.0,
+          1065.0
+        ],
+        [
+          464.5238095238094,
+          1065.0
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
     }
   ],
   "imagePath": "cup_video01_0039.jpg",

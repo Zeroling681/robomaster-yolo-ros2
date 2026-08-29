@@ -2,29 +2,10 @@
   "version": "4.0.3",
   "flags": {},
   "checked": false,
-  "shapes": [
-    {
-      "label": "mouse",
-      "shape_type": "rectangle",
-      "flags": {},
-      "points": [
-        [
-          0.0,
-          0.0
-        ],
-        [
-          624.24864,
-          669.19424
-        ]
-      ],
-      "group_id": null,
-      "description": null,
-      "difficult": false,
-      "attributes": {}
-    }
-  ],
+  "shapes": [],
   "imagePath": "aug_0276_mouse_video02_0048.jpg",
   "imageData": null,
   "imageHeight": 1280,
-  "imageWidth": 720
+  "imageWidth": 720,
+  "description": ""
 }

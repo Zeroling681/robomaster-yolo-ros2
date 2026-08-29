@@ -5,8 +5,7 @@
   "shapes": [
     {
       "label": "cup",
-      "shape_type": "rectangle",
-      "flags": {},
+      "score": null,
       "points": [
         [
           287.92044000000004,
@@ -14,17 +13,58 @@
         ],
         [
           692.3466000000001,
+          27.44320000000002
+        ],
+        [
+          692.3466000000001,
+          919.16544
+        ],
+        [
+          287.92044000000004,
           919.16544
         ]
       ],
       "group_id": null,
       "description": null,
       "difficult": false,
-      "attributes": {}
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          0.0,
+          373.5714285714286
+        ],
+        [
+          237.8571428571429,
+          373.5714285714286
+        ],
+        [
+          237.8571428571429,
+          525.0000000000001
+        ],
+        [
+          0.0,
+          525.0000000000001
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
     }
   ],
   "imagePath": "cup_video01_0043.jpg",
   "imageData": null,
   "imageHeight": 1280,
-  "imageWidth": 720
+  "imageWidth": 720,
+  "description": ""
 }
