@@ -45,7 +45,8 @@ def main() -> None:
             raise FileNotFoundError(subset_annotation)
         # X-AnyLabeling saves via file replacement, which can break hard links.
         # Copy the reviewed JSON back explicitly before updating the manifest.
-        shutil.copy2(subset_annotation, annotation_path)
+        if not annotation_path.exists() or not subset_annotation.samefile(annotation_path):
+            shutil.copy2(subset_annotation, annotation_path)
         data = json.loads(subset_annotation.read_text(encoding="utf-8"))
         box_count = len(data.get("shapes") or [])
         row["box_count"] = str(box_count)
