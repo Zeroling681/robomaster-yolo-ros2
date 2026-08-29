@@ -13,10 +13,17 @@
     "synthetic_augmentation": 597
   },
   "audit_status_counts": {
-    "annotation_required": 25,
+    "review_required": 812,
     "recheck_recommended": 188,
-    "review_required": 812
+    "empty_candidate_pending_confirmation": 25
   },
   "xanylabeling_images": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\images",
-  "xanylabeling_output": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\annotations"
+  "xanylabeling_output": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\annotations",
+  "human_review_sync": {
+    "subset": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\review_missing",
+    "updated_rows": 25,
+    "status_counts": {
+      "empty_candidate_pending_confirmation": 25
+    }
+  }
 }
