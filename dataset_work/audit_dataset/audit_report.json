@@ -2,10 +2,10 @@
   "images": 1036,
   "annotations": 1036,
   "boxes_by_class": {
-    "cup": 540,
-    "mouse": 777
+    "cup": 542,
+    "mouse": 781
   },
-  "empty_annotations": 19,
+  "empty_annotations": 13,
   "origin_counts": {
     "synthetic_augmentation": 597,
     "human_reviewed_original": 188,
@@ -14,18 +14,16 @@
     "user_captured_hard_negative": 11
   },
   "audit_status_counts": {
-    "human_checked": 1017,
-    "human_checked_negative": 13,
-    "annotation_required": 6
+    "human_checked": 1023,
+    "human_checked_negative": 13
   },
   "xanylabeling_images": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\images",
   "xanylabeling_output": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\annotations",
   "human_review_sync": {
-    "subset": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\review_missing",
-    "updated_rows": 6,
+    "subset": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\review_with_boxes",
+    "updated_rows": 1023,
     "status_counts": {
-      "human_checked_negative": 5,
-      "human_checked": 1
+      "human_checked": 1023
     }
   }
 }

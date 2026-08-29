@@ -2,9 +2,40 @@
   "version": "4.0.3",
   "flags": {},
   "checked": false,
-  "shapes": [],
+  "shapes": [
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          622.5128205128206,
+          0.0
+        ],
+        [
+          794.3076923076924,
+          0.0
+        ],
+        [
+          794.3076923076924,
+          94.34615384615385
+        ],
+        [
+          622.5128205128206,
+          94.34615384615385
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
   "imagePath": "hard_monitor_mouse_cup.jpg",
   "imageData": null,
   "imageHeight": 1706,
-  "imageWidth": 1279
+  "imageWidth": 1279,
+  "description": ""
 }

@@ -2,9 +2,40 @@
   "version": "4.0.3",
   "flags": {},
   "checked": true,
-  "shapes": [],
+  "shapes": [
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          0.0,
+          645.6282051282051
+        ],
+        [
+          254.56410256410243,
+          645.6282051282051
+        ],
+        [
+          254.56410256410243,
+          1085.3717948717945
+        ],
+        [
+          0.0,
+          1085.3717948717945
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
   "imagePath": "neg_new_monitor_screen.jpg",
   "imageData": null,
   "imageHeight": 1706,
-  "imageWidth": 1279
+  "imageWidth": 1279,
+  "description": ""
 }
