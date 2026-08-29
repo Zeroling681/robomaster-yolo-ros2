@@ -1027,3 +1027,4 @@ cup_video01_0110.jpg,train,2,human_checked
 neg_monitor_back.jpg,train,0,human_checked_negative
 neg_monitor_keyboard.jpg,train,0,human_checked_negative
 neg_laptop.jpg,train,0,human_checked_negative
+neg_lab_mouse.jpg,train,1,human_checked

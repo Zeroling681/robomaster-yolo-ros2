@@ -4,10 +4,19 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import shutil
 from collections import Counter
 from pathlib import Path
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def main() -> None:
@@ -75,6 +84,8 @@ def main() -> None:
         changed[row["audit_status"]] += 1
 
     with manifest_path.open("w", encoding="utf-8-sig", newline="") as handle:
+        for row in rows:
+            row["sha256"] = sha256(audit / "images" / row["filename"])
         writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()))
         writer.writeheader()
         writer.writerows(rows)

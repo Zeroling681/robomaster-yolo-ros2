@@ -14,9 +14,8 @@
     "user_captured_hard_negative": 4
   },
   "audit_status_counts": {
-    "human_checked": 1016,
-    "human_checked_negative": 12,
-    "human_edited_pending_check": 1
+    "human_checked": 1017,
+    "human_checked_negative": 12
   },
   "xanylabeling_images": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\images",
   "xanylabeling_output": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\annotations",
@@ -24,8 +23,8 @@
     "subset": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\review_missing",
     "updated_rows": 6,
     "status_counts": {
-      "human_edited_pending_check": 1,
-      "human_checked_negative": 5
+      "human_checked_negative": 5,
+      "human_checked": 1
     }
   }
 }
