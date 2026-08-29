@@ -1,5 +1,8 @@
 .venv/
+.codex/
+.idea/
 __pycache__/
+**/*.cache
 .pytest_cache/
 .ruff_cache/
 runs/
