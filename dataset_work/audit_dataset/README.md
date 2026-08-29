@@ -32,3 +32,19 @@ powershell -ExecutionPolicy Bypass -File scripts/open_audit_dataset.ps1
 8. 审核完成后在 X-AnyLabeling 中将图片标记为已检查。
 
 注意：当前目录是审计工作集，不应在审核完成前直接用于重新训练。
+
+## 只查看有框或漏标
+
+已经生成两个筛选视图：
+
+- `review_with_boxes/`：1000 张已有至少一个框的图片；
+- `review_missing/`：25 张当前没有框的图片，优先检查漏标。
+
+在 PowerShell 中分别运行：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/open_audit_subset.ps1 -Subset missing
+powershell -ExecutionPolicy Bypass -File scripts/open_audit_subset.ps1 -Subset marked
+```
+
+两个视图使用原审计目录文件的硬链接，不会另存一份图片；在视图中修改 JSON 会同步修改 `annotations/` 中的审计标注。
