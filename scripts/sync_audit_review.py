@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import shutil
 from collections import Counter
 from pathlib import Path
 
@@ -14,6 +15,12 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--audit", type=Path, default=root / "dataset_work" / "audit_dataset")
     parser.add_argument("--subset", type=Path, default=None, help="filtered view, e.g. review_missing")
+    parser.add_argument(
+        "--confirmed-empty",
+        action="append",
+        default=[],
+        help="image filename confirmed by a human to contain no target (repeatable)",
+    )
     args = parser.parse_args()
     audit = args.audit.resolve()
     subset = (args.subset or audit / "review_missing").resolve()
@@ -25,17 +32,29 @@ def main() -> None:
     rows = list(csv.DictReader(manifest_path.open(encoding="utf-8-sig", newline="")))
     subset_names = {row["filename"] for row in csv.DictReader(subset_manifest_path.open(encoding="utf-8-sig", newline=""))}
     row_by_name = {row["filename"]: row for row in rows}
+    confirmed_empty = set(args.confirmed_empty)
+    unknown_empty = confirmed_empty - subset_names
+    if unknown_empty:
+        raise ValueError(f"confirmed-empty 不在审核子集中: {sorted(unknown_empty)}")
     changed = Counter()
     for name in subset_names:
         row = row_by_name[name]
+        subset_annotation = subset / "annotations" / f"{Path(name).stem}.json"
         annotation_path = audit / "annotations" / f"{Path(name).stem}.json"
-        if not annotation_path.is_file():
-            raise FileNotFoundError(annotation_path)
-        data = json.loads(annotation_path.read_text(encoding="utf-8"))
+        if not subset_annotation.is_file():
+            raise FileNotFoundError(subset_annotation)
+        # X-AnyLabeling saves via file replacement, which can break hard links.
+        # Copy the reviewed JSON back explicitly before updating the manifest.
+        shutil.copy2(subset_annotation, annotation_path)
+        data = json.loads(subset_annotation.read_text(encoding="utf-8"))
         box_count = len(data.get("shapes") or [])
         row["box_count"] = str(box_count)
         row["annotation_origin"] = "xanylabeling_human_review"
-        if data.get("checked") is True:
+        if name in confirmed_empty:
+            if box_count:
+                raise ValueError(f"confirmed-empty 文件仍有标注框: {name}")
+            row["audit_status"] = "human_checked_negative"
+        elif data.get("checked") is True:
             row["audit_status"] = "human_checked"
         elif box_count:
             row["audit_status"] = "human_edited_pending_check"
