@@ -1,0 +1,2 @@
+dataset_work/audit_dataset/images/*.jpg filter=lfs diff=lfs merge=lfs -text
+dataset_work/audit_dataset/source_videos/*.mp4 filter=lfs diff=lfs merge=lfs -text

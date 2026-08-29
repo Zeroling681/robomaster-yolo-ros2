@@ -1,0 +1,3 @@
+video_id,filename,scenario,expected_objects,annotation_note
+new_blur,new_blur.mp4,快速运动与模糊,cup;mouse,逐帧确认模糊目标是否仍可辨认
+new_black_overlap,new_black_overlap.mp4,黑色物品与鼠标重叠,mouse,黑色干扰物不标框，仅标真实鼠标
