@@ -1,9 +1,9 @@
 {
-  "exported_images": 1029,
-  "negative_images": 12,
-  "excluded_pending": 0,
+  "exported_images": 1030,
+  "negative_images": 13,
+  "excluded_pending": 6,
   "split_counts": {
-    "train": 973,
+    "train": 974,
     "val": 38,
     "test": 18
   },

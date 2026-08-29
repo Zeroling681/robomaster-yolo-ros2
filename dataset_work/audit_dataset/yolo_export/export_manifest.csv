@@ -1028,3 +1028,4 @@ neg_monitor_back.jpg,train,0,human_checked_negative
 neg_monitor_keyboard.jpg,train,0,human_checked_negative
 neg_laptop.jpg,train,0,human_checked_negative
 neg_lab_mouse.jpg,train,1,human_checked
+neg_new_monitor_screen.jpg,train,0,human_checked_negative

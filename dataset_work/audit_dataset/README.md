@@ -33,19 +33,20 @@ powershell -ExecutionPolicy Bypass -File scripts/open_audit_dataset.ps1
 
 注意：当前目录是审计工作集，不应在审核完成前直接用于重新训练。
 
-当前审核汇总：`audit_report.json` 记录 1029 张图片，其中 1028 张已进入
-`yolo_export/`，12 张是确认无目标的空标注负样本，1 张（`neg_lab_mouse.jpg`）
-仍需补一个鼠标框后才能进入训练集。
+当前审核汇总以 `audit_report.json` 为准。新增补充样本已去除 1 张重复图片：
+`hard_foam_object_review.jpg` 等文件属于 `annotation_required`，必须在
+X-AnyLabeling 中人工补框并保存后，才能进入训练导出；`neg_new_monitor_screen.jpg`
+是本批确认无鼠标/水杯的空标注负样本。审计目录中不得把待标注图片当作负样本使用。
 
 `yolo_export/` 是本次人工审核后的训练导出，包含 `dataset.yaml`、YOLO 标签、
 导出清单和待处理清单；导出前请先确认 `excluded_pending.csv` 已清空。
 
 ## 只查看有框或漏标
 
-已经生成两个筛选视图：
+已经生成两个筛选视图（运行 `build_audit_views.py --force` 后会刷新）：
 
-- `review_with_boxes/`：1000 张已有至少一个框的图片；
-- `review_missing/`：25 张当前没有框的图片，优先检查漏标。
+- `review_with_boxes/`：已有至少一个框的图片；
+- `review_missing/`：当前没有框的图片，包含新增待标注困难样本，优先检查漏标。
 
 在 PowerShell 中分别运行：
 
@@ -54,4 +55,11 @@ powershell -ExecutionPolicy Bypass -File scripts/open_audit_subset.ps1 -Subset m
 powershell -ExecutionPolicy Bypass -File scripts/open_audit_subset.ps1 -Subset marked
 ```
 
-两个视图使用原审计目录文件的硬链接，不会另存一份图片；在视图中修改 JSON 会同步修改 `annotations/` 中的审计标注。
+两个视图使用原审计目录文件的硬链接，不会另存一份图片；在视图中修改 JSON
+会同步修改 `annotations/` 中的审计标注。审核新增困难样本后，执行：
+
+```powershell
+py -3.13 scripts/sync_audit_review.py --subset dataset_work/audit_dataset/review_missing --confirm-all-reviewed
+py -3.13 scripts/build_audit_views.py --force
+py -3.13 scripts/export_audited_yolo.py --force
+```

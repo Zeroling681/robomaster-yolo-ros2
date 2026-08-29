@@ -1,21 +1,22 @@
 {
-  "images": 1029,
-  "annotations": 1029,
+  "images": 1036,
+  "annotations": 1036,
   "boxes_by_class": {
     "cup": 540,
     "mouse": 777
   },
-  "empty_annotations": 12,
+  "empty_annotations": 19,
   "origin_counts": {
     "synthetic_augmentation": 597,
     "human_reviewed_original": 188,
     "difficult_video_prelabel": 215,
     "difficult_video_excluded_frame": 25,
-    "user_captured_hard_negative": 4
+    "user_captured_hard_negative": 11
   },
   "audit_status_counts": {
     "human_checked": 1017,
-    "human_checked_negative": 12
+    "human_checked_negative": 13,
+    "annotation_required": 6
   },
   "xanylabeling_images": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\images",
   "xanylabeling_output": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset\\annotations",
