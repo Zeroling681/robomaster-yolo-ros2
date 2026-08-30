@@ -73,7 +73,15 @@ def main() -> None:
         if row["audit_status"] not in READY_STATUSES:
             excluded.append({"filename": row["filename"], "reason": row["audit_status"]})
             continue
-        split = row["dataset_split"] if row["dataset_split"] in {"train", "val", "test"} else "train"
+        if row["dataset_split"] not in {"train", "val", "test"}:
+            excluded.append(
+                {
+                    "filename": row["filename"],
+                    "reason": row["dataset_split"],
+                }
+            )
+            continue
+        split = row["dataset_split"]
         image_path = audit / "images" / row["filename"]
         annotation_path = audit / "annotations" / f"{Path(row['filename']).stem}.json"
         image = cv2.imread(str(image_path))
