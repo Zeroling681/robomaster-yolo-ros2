@@ -1,0 +1,41 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          12.256410256410277,
+          439.2179487179487
+        ],
+        [
+          162.25641025641028,
+          439.2179487179487
+        ],
+        [
+          162.25641025641028,
+          562.2948717948718
+        ],
+        [
+          12.256410256410277,
+          562.2948717948718
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "hard_monitor_pink_mouse.jpg",
+  "imageData": null,
+  "imageHeight": 1706,
+  "imageWidth": 1279,
+  "description": ""
+}

@@ -1,0 +1,98 @@
+{
+  "images_total": 1042,
+  "new_unique_images_merged": 6,
+  "duplicate_images_excluded": [
+    {
+      "filename": "new_mouse_angle_06.jpg",
+      "duplicate_of": "new_mouse_angle_05.jpg"
+    }
+  ],
+  "split_counts": {
+    "excluded": 417,
+    "test": 240,
+    "train": 324,
+    "val": 61
+  },
+  "boxes_by_class": {
+    "cup": 542,
+    "mouse": 790
+  },
+  "empty_annotations": 13,
+  "clipped_boxes": [
+    {
+      "filename": "aug_0070_cup_video01_0002.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0072_cup_video01_0004.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0086_cup_video01_0029.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0090_cup_video01_0036.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0143_cup_video01_0098.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0235_mouse_video02_0007.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0275_mouse_video02_0047.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0328_mouse_video02_0100.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0417_cup_video01_0002.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0430_cup_video01_0026.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0432_cup_video01_0028.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0433_cup_video01_0029.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0437_cup_video01_0036.jpg",
+      "count": 1
+    },
+    {
+      "filename": "aug_0490_cup_video01_0098.jpg",
+      "count": 1
+    },
+    {
+      "filename": "cup_video01_0028.jpg",
+      "count": 1
+    },
+    {
+      "filename": "cup_video01_0029.jpg",
+      "count": 1
+    },
+    {
+      "filename": "mouse_video02_0091.jpg",
+      "count": 1
+    },
+    {
+      "filename": "mouse_video02_0100.jpg",
+      "count": 1
+    }
+  ],
+  "audit_errors": [],
+  "source_audit": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset",
+  "manual_batch": "F:\\PycharmProjects\\robomaster\\dataset_work\\manual_annotation_batch_20260830"
+}

@@ -16,3 +16,6 @@ dataset_work/audit_dataset/review_missing/images/
 dataset_work/audit_dataset/review_missing/annotations/
 dataset_work/audit_dataset/review_with_boxes/images/
 dataset_work/audit_dataset/review_with_boxes/annotations/
+dataset_work/audit_dataset_v6/images/
+dataset_work/yolo_export_v6/images/
+dataset_work/manual_annotation_batch_20260830/
