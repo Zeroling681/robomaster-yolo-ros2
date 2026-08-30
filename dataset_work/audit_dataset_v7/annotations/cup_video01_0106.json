@@ -1,0 +1,70 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          213.60996,
+          83.55903999999995
+        ],
+        [
+          594.24588,
+          83.55903999999995
+        ],
+        [
+          594.24588,
+          1002.65664
+        ],
+        [
+          213.60996,
+          1002.65664
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          0.0,
+          424.04761904761904
+        ],
+        [
+          155.95238095238085,
+          424.04761904761904
+        ],
+        [
+          155.95238095238085,
+          543.0952380952381
+        ],
+        [
+          0.0,
+          543.0952380952381
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "cup_video01_0106.jpg",
+  "imageData": null,
+  "imageHeight": 1280,
+  "imageWidth": 720,
+  "description": ""
+}

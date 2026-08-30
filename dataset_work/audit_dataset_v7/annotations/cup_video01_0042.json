@@ -1,0 +1,99 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          349.2857142857142,
+          0.0
+        ],
+        [
+          719.0,
+          0.0
+        ],
+        [
+          719.0,
+          851.6666666666666
+        ],
+        [
+          349.2857142857142,
+          851.6666666666666
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          0.0,
+          476.42857142857144
+        ],
+        [
+          82.61904761904748,
+          476.42857142857144
+        ],
+        [
+          82.61904761904748,
+          797.3809523809522
+        ],
+        [
+          0.0,
+          797.3809523809522
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          0.0,
+          337.3809523809523
+        ],
+        [
+          220.71428571428567,
+          337.3809523809523
+        ],
+        [
+          220.71428571428567,
+          414.52380952380946
+        ],
+        [
+          0.0,
+          414.52380952380946
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "cup_video01_0042.jpg",
+  "imageData": null,
+  "imageHeight": 1280,
+  "imageWidth": 720,
+  "description": ""
+}

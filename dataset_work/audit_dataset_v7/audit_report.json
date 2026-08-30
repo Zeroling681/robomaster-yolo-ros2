@@ -1,0 +1,99 @@
+{
+  "images_total": 1062,
+  "new_hard_negatives_imported": 20,
+  "negative_sources": [
+    {
+      "filename": "hard_negative_lab_01.jpg",
+      "source_filename": "c4bdfdb264da47601602cf4274bbc465.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_02.jpg",
+      "source_filename": "40e607c71f1b2c214ffaef13da524b37.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_03.jpg",
+      "source_filename": "codex-clipboard-a033fa69-b6df-4b75-afed-74d84e8cb06b.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_04.jpg",
+      "source_filename": "aefc0a72ee3d147c136cd0f153721266.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_05.jpg",
+      "source_filename": "a0502d682ffe12e20bde539a51c2165a.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_06.jpg",
+      "source_filename": "3aa3fdb27cf0a0a13fededb7137db81e.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_07.jpg",
+      "source_filename": "2dbca3bc1b672e215dd15beec577352b.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_08.jpg",
+      "source_filename": "71410589ed5a88efd3f3c9577e1bac3c.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_09.jpg",
+      "source_filename": "74db370fbf6ff541488a1afa0a27c5a7.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_10.jpg",
+      "source_filename": "9d98f9a9135ef6ceb1ad7917cd25c459.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_11.jpg",
+      "source_filename": "7b84a5f2620e49977e96a82223074825.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_12.jpg",
+      "source_filename": "365986cd3317b7949d7ff684955a3e36.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_13.jpg",
+      "source_filename": "49ee334aa98ec9bdf78c17d944fa9139.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_14.jpg",
+      "source_filename": "8893070d2bd7db127c36f316496dcd13.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_15.jpg",
+      "source_filename": "46a350f0075fb611816e4f87265b8fbd.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_16.jpg",
+      "source_filename": "46e1f0efbdefcf967ad37dd95173823a.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_17.jpg",
+      "source_filename": "d7b294e2c2fb77148765462538430ad4.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_18.jpg",
+      "source_filename": "ede22d53234c31fec3ca74c603fdaf16.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_19.jpg",
+      "source_filename": "f0c03dcb5cc8ea6ade943c9832258633.jpg"
+    },
+    {
+      "filename": "hard_negative_lab_20.jpg",
+      "source_filename": "aa33738f5579828e4bf475cdf3d13f2c.jpg"
+    }
+  ],
+  "excluded_from_import": {
+    "source_filename": "c388d96805d52dd6e8cee9daea07f2ed.jpg",
+    "reason": "contains_visible_mouse; must not receive an empty label"
+  },
+  "split_counts": {
+    "excluded": 417,
+    "test": 240,
+    "train": 344,
+    "val": 61
+  },
+  "empty_annotations": 33,
+  "audit_errors": [],
+  "source_audit": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset_v6"
+}

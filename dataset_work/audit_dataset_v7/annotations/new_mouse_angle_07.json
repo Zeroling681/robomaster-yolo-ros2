@@ -1,0 +1,41 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          247.54385964912277,
+          0.0
+        ],
+        [
+          835.6140350877191,
+          0.0
+        ],
+        [
+          835.6140350877191,
+          726.5789473684209
+        ],
+        [
+          247.54385964912277,
+          726.5789473684209
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "new_mouse_angle_07.jpg",
+  "imageData": null,
+  "imageHeight": 810,
+  "imageWidth": 1440,
+  "description": ""
+}
