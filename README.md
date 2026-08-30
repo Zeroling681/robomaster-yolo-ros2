@@ -38,6 +38,18 @@ bash scripts/check_ros2.sh
 - 视频抽帧与标注说明：`dataset_work/README.md`
 - X-AnyLabeling 操作规范：`dataset_work/LABELING_GUIDE.md`
 
+## 困难样本人工复核
+
+2026-08-30 在 X-AnyLabeling 中复核了以下样本：
+
+- `hard_robot_mouse.jpg`：复核确认画面中没有鼠标，按背景样本处理，保持
+  JSON 的 `shapes` 为空，不补绘目标框。该图片保留为鼠标难负样本。
+- `neg_laptop.jpg`：左侧边缘可见一个杯子，仅标注这一个 `cup` 框；笔记本、
+  键盘和屏幕内容不标注。该图片同时作为杯子正样本和鼠标难负样本。
+
+修改标注后，应重新运行 YOLO 转换和验证脚本，再开始下一轮训练；不要直接
+手工修改导出的坐标文件。
+
 ## sudo 密码
 
 用户 `tonyt` 当前不启用免密 sudo。需要自行设置密码时，在 PowerShell 中运行：
