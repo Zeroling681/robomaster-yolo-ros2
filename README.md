@@ -157,7 +157,7 @@ python -m pip install -r requirements-yolo.txt
 python scripts/check_yolo.py
 ```
 
-## v7 至 v10 训练参数
+## v7 至 v12 训练参数
 
 各版本使用的完整入口参数如下。`lr0=auto` 表示脚本不显式传入初始学习率，
 由 Ultralytics 的 `optimizer=auto` 决定。v7、v8 的 `args.yaml` 虽然记录
@@ -170,6 +170,8 @@ python scripts/check_yolo.py
 | v8 | `dataset_work/yolo_export_v8/dataset.yaml` | `yolo11n.pt` | 100 | 25 | 16 | 768 | `auto` | auto | 0.01 | `mouse_cup_yolo11n_v8_768` |
 | v9 | `dataset_work/audit_dataset_v9/yolo_export/dataset.yaml` | v8 `best.pt` | 50 | 15 | 16 | 768 | `SGD` | 0.001 | 0.01 | `mouse_cup_yolo11n_v9_camera_768` |
 | v10 | `dataset_work/audit_dataset_v10/yolo_export/dataset.yaml` | v9 `best.pt` | 60 | 20 | 16 | 768 | `SGD` | 0.0005 | 0.01 | `mouse_cup_yolo11n_v10_clean_768` |
+| v11 | `dataset_work/audit_dataset_v11/yolo_export/dataset.yaml` | v10 `best.pt` | 30 | 10 | 16 | 768 | `SGD` | 0.0002 | 0.01 | `mouse_cup_yolo11n_v11_error_feedback_768` |
+| v12 | `dataset_work/audit_dataset_v12/yolo_export/dataset.yaml` | v11 `best.pt` | 30 | 10 | 16 | 768 | `SGD` | 0.0002 | 0.01 | `mouse_cup_yolo11n_v12_phone_hard_negative_768` |
 
 `train_yolo.py` 对所有版本统一传入以下参数：
 
@@ -200,7 +202,7 @@ CutMix 或 Copy-Paste，即 `degrees=0`、`shear=0`、`perspective=0`、
 
 ## 训练启动方式
 
-当前推荐训练版本是 v10。在 PowerShell 中进入 WSL 后启动：
+当前训练版本是 v12。在 PowerShell 中进入 WSL 后启动：
 
 ```powershell
 wsl -d Ubuntu-22.04
@@ -209,14 +211,14 @@ wsl -d Ubuntu-22.04
 ```bash
 cd /mnt/f/PycharmProjects/robomaster
 source /home/tonyt/.venvs/robomaster/bin/activate
-bash scripts/train_v10_camera_wsl.sh
+bash scripts/train_v12_phone_hard_negative_wsl.sh
 ```
 
 也可以直接从 PowerShell 用一条命令启动：
 
 ```powershell
 wsl -d Ubuntu-22.04 -- bash -lc `
-  "cd /mnt/f/PycharmProjects/robomaster && bash scripts/train_v10_camera_wsl.sh"
+  "cd /mnt/f/PycharmProjects/robomaster && bash scripts/train_v12_phone_hard_negative_wsl.sh"
 ```
 
 需要复现历史实验时，分别运行：
@@ -226,6 +228,8 @@ bash scripts/train_v7_wsl.sh
 bash scripts/train_v8_wsl.sh
 bash scripts/train_v9_camera_wsl.sh
 bash scripts/train_v10_camera_wsl.sh
+bash scripts/train_v11_error_feedback_wsl.sh
+bash scripts/train_v12_phone_hard_negative_wsl.sh
 ```
 
 Shell 脚本会先进入对应 YOLO 导出目录，因为 `dataset.yaml` 使用 `path: .`，
@@ -239,7 +243,7 @@ Shell 脚本会先进入对应 YOLO 导出目录，因为 `dataset.yaml` 使用 
 - `confusion_matrix.png`：验证集混淆矩阵。
 
 这些脚本中的虚拟环境和 `/mnt/f/PycharmProjects/robomaster` 路径对应当前 WSL
-部署；复制到其他电脑时，需要先修改为实际项目路径和虚拟环境位置。v9、v10
+部署；复制到其他电脑时，需要先修改为实际项目路径和虚拟环境位置。v9 至 v12
 是微调流程，启动前还必须确认上一版本的 `weights/best.pt` 已存在。
 
 ## 外置摄像头实时测试与录像
@@ -277,6 +281,42 @@ py -3.13 scripts/live_camera_onnx.py `
 两项失败分别是不锈钢杯在运动模糊下漏检，以及 Razer 鼠标画面出现额外背景
 误框。完整口径、逐项时间戳、联系表和压缩录像见
 [`docs/v10_local_camera1_20_object_test.md`](docs/v10_local_camera1_20_object_test.md)。
+
+### v11 错误反馈数据
+
+上述两个失败场景已整理到 `dataset_work/camera_v11_error_corrections/`。漏检画面
+保留完整原始帧，并人工标注杯子和鼠标；误检画面不能整张设为空标签，因为原图
+右侧存在真实鼠标，因此只裁取不含真实目标的左侧误检区域作为负样本。
+
+合并导出目录为 `dataset_work/audit_dataset_v11/yolo_export/`：train 392、val 61、
+test 240，共 693 张图片，包含 36 张空标签负样本、546 个鼠标框和 349 个杯子框。
+数据审计已通过，未发现跨集合重复、场景泄漏、越界框或非法类别。v11 从 v10
+最佳权重以较低学习率继续微调，启动命令为：
+
+```bash
+bash scripts/train_v11_error_feedback_wsl.sh
+```
+
+v11 在验证集上的最佳结果为 `precision=0.8535`、`recall=0.7864`、
+`mAP50=0.8779`、`mAP50-95=0.7102`。在保持不变的独立测试集上，v11 的
+`mAP50=0.690`、`mAP50-95=0.373`，相比 v10 的 `0.670` 和 `0.348` 均有提升。
+可复现模型文件、训练参数和逐轮指标保存在 `models/v11/`。
+
+### v12 手机难负样本与鼠标新视角
+
+手机多角度误检录像经过筛选后，整理为
+`dataset_work/camera_v12_phone_mouse_annotation_batch/`。人工复核后的批次包含
+10 张鼠标正样本和 10 张手机难负样本；正样本共标注 20 个鼠标框和 2 个杯子框，
+手机裁剪图保持空标签，用于抑制“手机被识别成鼠标”的误检。
+
+合并导出目录为 `dataset_work/audit_dataset_v12/yolo_export/`：train 412、val 61、
+test 240，共 713 张图片，包含 46 张空标签负样本、566 个鼠标框和 351 个杯子框。
+审计结果为 `PASS`，未发现跨集合重复、场景泄漏或非法标签。v12 保持 v11 的
+验证集和测试集不变，使用较低学习率继续微调：
+
+```bash
+bash scripts/train_v12_phone_hard_negative_wsl.sh
+```
 
 ## sudo 密码
 
