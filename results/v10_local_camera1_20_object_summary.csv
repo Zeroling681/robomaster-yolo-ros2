@@ -1,0 +1,21 @@
+trial,timestamp_seconds,expected,predicted,extra_false_positive,strict_scene_correct,note
+1,3.5,cup,cup,no,yes,stainless tumbler
+2,7.5,cup,cup,no,yes,blue insulated cup
+3,12.0,cup,cup,no,yes,green bottle-shaped cup
+4,17.5,cup,cup,no,yes,tea bottle treated as cup class
+5,24.0,mouse,mouse,no,yes,black mouse side view
+6,27.0,mouse,mouse,no,yes,black mouse front-side view
+7,31.0,cup,cup,no,yes,stainless tumbler repeat
+8,38.5,3 cups,3 cups,no,yes,three-object overlap scene
+9,42.0,cup,cup,no,yes,tea bottle rotated view
+10,54.0,mouse,mouse,no,yes,black mouse side view
+11,62.0,cup,cup,no,yes,blue insulated cup repeat
+12,68.0,cup,cup,no,yes,green bottle-shaped cup repeat
+13,75.0,cup,cup,no,yes,stainless tumbler repeat
+14,79.0,mouse,mouse,no,yes,black mouse distant view
+15,82.0,mouse,mouse,no,yes,Razer mouse
+16,85.0,mouse,mouse,no,yes,black mouse oblique view
+17,87.0,3 cups,3 cups,no,yes,second three-object overlap scene
+18,89.0,mouse,mouse,no,yes,black mouse repeat
+19,90.0,mouse + cup,mouse,no,no,stainless tumbler missed during motion
+20,92.0,mouse,mouse,yes,no,extra mouse box on left-side background
