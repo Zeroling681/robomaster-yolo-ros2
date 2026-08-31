@@ -1,0 +1,3 @@
+filename,source_video,timestamp_seconds,sharpness,brightness,sha256,annotation_status,label_policy
+v10_error_missed_cup_mouse_t090000.jpg,local_camera1_v10_20_object_take2_raw,90.000,15.85,139.37,0459feeac4fa9a81feecfab0c1a6415a93be32e7ab8ec14cb3c3ec90245b67c8,human_checked,annotate every visible mouse and cup
+v10_error_false_mouse_background_t092000.jpg,local_camera1_v10_20_object_take2_raw_crop,92.000,11.70,137.64,d1d255f12a0689c19d068e3855755c5f7684ea8c67ac84276be8b18b3fa87128,human_checked,hard-negative crop containing no mouse or cup

@@ -1,0 +1,30 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "cup",
+      "shape_type": "rectangle",
+      "flags": {},
+      "points": [
+        [
+          4.499280000000003,
+          340.608
+        ],
+        [
+          596.47464,
+          920.51968
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "attributes": {}
+    }
+  ],
+  "imagePath": "cup_video01_0073.jpg",
+  "imageData": null,
+  "imageHeight": 1280,
+  "imageWidth": 720
+}

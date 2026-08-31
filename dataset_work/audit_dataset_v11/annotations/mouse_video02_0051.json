@@ -1,0 +1,30 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "mouse",
+      "shape_type": "rectangle",
+      "flags": {},
+      "points": [
+        [
+          418.31136,
+          723.83936
+        ],
+        [
+          718.14528,
+          1278.7104
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "attributes": {}
+    }
+  ],
+  "imagePath": "mouse_video02_0051.jpg",
+  "imageData": null,
+  "imageHeight": 1280,
+  "imageWidth": 720
+}

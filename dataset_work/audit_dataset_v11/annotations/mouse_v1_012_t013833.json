@@ -1,0 +1,30 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "mouse",
+      "shape_type": "rectangle",
+      "flags": {},
+      "points": [
+        [
+          149.27743999999996,
+          101.03760000000001
+        ],
+        [
+          1271.2896,
+          713.61648
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "attributes": {}
+    }
+  ],
+  "imagePath": "mouse_v1_012_t013833.jpg",
+  "imageData": null,
+  "imageHeight": 720,
+  "imageWidth": 1280
+}

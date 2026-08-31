@@ -1,0 +1,46 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [0.0, 55.0],
+        [267.0, 55.0],
+        [267.0, 479.0],
+        [0.0, 479.0]
+      ],
+      "group_id": null,
+      "description": "motion-blurred stainless tumbler",
+      "difficult": true,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [334.0, 207.0],
+        [469.0, 207.0],
+        [469.0, 287.0],
+        [334.0, 287.0]
+      ],
+      "group_id": null,
+      "description": "visible black mouse",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "v10_error_missed_cup_mouse_t090000.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "Recovered from v10 local camera test item 19."
+}

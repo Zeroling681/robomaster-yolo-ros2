@@ -1,0 +1,100 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          164.66666666666666,
+          252.6114081996434
+        ],
+        [
+          276.66666666666663,
+          252.6114081996434
+        ],
+        [
+          276.66666666666663,
+          327.6114081996434
+        ],
+        [
+          164.66666666666666,
+          327.6114081996434
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          345.57932263814615,
+          166.6488413547237
+        ],
+        [
+          387.29055258467025,
+          166.6488413547237
+        ],
+        [
+          387.29055258467025,
+          190.89126559714794
+        ],
+        [
+          345.57932263814615,
+          190.89126559714794
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          278.9126559714795,
+          108.18181818181814
+        ],
+        [
+          358.77005347593587,
+          108.18181818181814
+        ],
+        [
+          358.77005347593587,
+          274.31372549019596
+        ],
+        [
+          278.9126559714795,
+          274.31372549019596
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v9_031_t049150.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "Initial manual annotation from raw external-camera footage. User review required before this batch is merged into training."
+}

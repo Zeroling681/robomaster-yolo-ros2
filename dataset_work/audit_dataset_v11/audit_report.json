@@ -1,0 +1,20 @@
+{
+  "images_total": 1154,
+  "camera_images_added": 2,
+  "split_counts": {
+    "excluded": 461,
+    "test": 240,
+    "train": 392,
+    "val": 61
+  },
+  "boxes_by_class": {
+    "cup": 607,
+    "mouse": 874
+  },
+  "empty_annotations": 39,
+  "clipped_boxes": [],
+  "confirmed_unchecked_images": [],
+  "audit_errors": [],
+  "source_audit": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset_v10",
+  "camera_batch": "F:\\PycharmProjects\\robomaster\\dataset_work\\camera_v11_error_corrections"
+}

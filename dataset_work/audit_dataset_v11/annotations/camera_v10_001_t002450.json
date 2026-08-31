@@ -1,0 +1,41 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          298.16399286987524,
+          180.9090909090909
+        ],
+        [
+          423.6541889483066,
+          180.9090909090909
+        ],
+        [
+          423.6541889483066,
+          228.680926916221
+        ],
+        [
+          298.16399286987524,
+          228.680926916221
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v10_001_t002450.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": ""
+}
