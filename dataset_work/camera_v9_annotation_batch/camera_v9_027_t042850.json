@@ -4,22 +4,63 @@
   "checked": true,
   "shapes": [
     {
+      "mask": null,
       "label": "mouse",
+      "score": null,
       "points": [
         [
-          329,
-          214
+          372.31729055258467,
+          172.70944741532972
         ],
         [
-          402,
-          264
+          441.4795008912657,
+          172.70944741532972
+        ],
+        [
+          441.4795008912657,
+          209.4295900178253
+        ],
+        [
+          372.31729055258467,
+          209.4295900178253
         ]
       ],
       "group_id": null,
       "description": "",
+      "difficult": false,
       "shape_type": "rectangle",
       "flags": {},
-      "mask": null
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          223.2976827094474,
+          71.81818181818181
+        ],
+        [
+          276.4171122994653,
+          71.81818181818181
+        ],
+        [
+          276.4171122994653,
+          180.1960784313725
+        ],
+        [
+          223.2976827094474,
+          180.1960784313725
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
     }
   ],
   "imagePath": "camera_v9_027_t042850.jpg",

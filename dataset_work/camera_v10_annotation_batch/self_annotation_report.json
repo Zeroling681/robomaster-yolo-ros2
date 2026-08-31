@@ -1,0 +1,46 @@
+{
+  "batch": "F:\\PycharmProjects\\robomaster\\dataset_work\\camera_v10_annotation_batch",
+  "images_total": 54,
+  "images_initially_annotated": 26,
+  "images_pending_human_review": 28,
+  "boxes_by_class": {
+    "cup": 5,
+    "mouse": 27
+  },
+  "focus": [
+    "blue insulated cup",
+    "previously missed mouse viewpoints"
+  ],
+  "pending_filenames": [
+    "camera_v10_001_t002450.jpg",
+    "camera_v10_002_t004250.jpg",
+    "camera_v10_003_t007350.jpg",
+    "camera_v10_004_t010050.jpg",
+    "camera_v10_005_t011750.jpg",
+    "camera_v10_006_t014750.jpg",
+    "camera_v10_007_t015850.jpg",
+    "camera_v10_008_t018550.jpg",
+    "camera_v10_009_t022050.jpg",
+    "camera_v10_010_t024950.jpg",
+    "camera_v10_011_t025350.jpg",
+    "camera_v10_012_t029750.jpg",
+    "camera_v10_013_t030050.jpg",
+    "camera_v10_014_t034650.jpg",
+    "camera_v10_015_t035450.jpg",
+    "camera_v10_016_t039650.jpg",
+    "camera_v10_017_t042050.jpg",
+    "camera_v10_018_t044550.jpg",
+    "camera_v10_019_t045250.jpg",
+    "camera_v10_020_t048750.jpg",
+    "camera_v10_021_t051450.jpg",
+    "camera_v10_022_t054150.jpg",
+    "camera_v10_023_t055050.jpg",
+    "camera_v10_024_t059150.jpg",
+    "camera_v10_025_t061050.jpg",
+    "camera_v10_046_t112850.jpg",
+    "camera_v10_047_t115750.jpg",
+    "camera_v10_050_t121450.jpg"
+  ],
+  "initial_annotation_only": true,
+  "next_step": "Review all checked boxes and annotate pending frames in X-AnyLabeling, then request merge."
+}

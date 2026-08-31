@@ -32,6 +32,35 @@
       "flags": {},
       "attributes": {},
       "kie_linking": []
+    },
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          0.0,
+          63.97504456327985
+        ],
+        [
+          113.85026737967917,
+          63.97504456327985
+        ],
+        [
+          113.85026737967917,
+          301.4081996434937
+        ],
+        [
+          0.0,
+          301.4081996434937
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
     }
   ],
   "imagePath": "camera_v9_014_t022450.jpg",

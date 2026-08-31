@@ -32,6 +32,35 @@
       "flags": {},
       "attributes": {},
       "kie_linking": []
+    },
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          265.0089126559715,
+          130.64171122994648
+        ],
+        [
+          312.42424242424244,
+          130.64171122994648
+        ],
+        [
+          312.42424242424244,
+          229.39393939393935
+        ],
+        [
+          265.0089126559715,
+          229.39393939393935
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
     }
   ],
   "imagePath": "camera_v9_029_t045850.jpg",

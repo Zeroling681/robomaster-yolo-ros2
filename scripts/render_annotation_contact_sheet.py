@@ -47,9 +47,16 @@ def main() -> None:
                 scale_x = args.width / annotation["imageWidth"]
                 scale_y = image_height / annotation["imageHeight"]
                 for item in annotation.get("shapes", []):
-                    if item.get("shape_type") != "rectangle" or len(item.get("points", [])) != 2:
+                    points = item.get("points", [])
+                    if item.get("shape_type") != "rectangle" or len(points) < 2:
                         continue
-                    (x1, y1), (x2, y2) = item["points"]
+                    # X-AnyLabeling may serialize a rectangle as either two
+                    # diagonal points or all four corners.  Use the full extent
+                    # so both representations render correctly.
+                    xs = [float(point[0]) for point in points]
+                    ys = [float(point[1]) for point in points]
+                    x1, x2 = min(xs), max(xs)
+                    y1, y2 = min(ys), max(ys)
                     p1 = (round(x1 * scale_x), round(y1 * scale_y))
                     p2 = (round(x2 * scale_x), round(y2 * scale_y))
                     color = (0, 220, 0) if item.get("label") == "mouse" else (0, 180, 255)

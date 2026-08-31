@@ -1,0 +1,72 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          194.065953654189,
+          236.52406417112306
+        ],
+        [
+          286.75579322638157,
+          236.52406417112306
+        ],
+        [
+          286.75579322638157,
+          280.3992869875224
+        ],
+        [
+          194.065953654189,
+          280.3992869875224
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          283.3279857397505,
+          268.9376114081997
+        ],
+        [
+          424.3279857397505,
+          268.9376114081997
+        ],
+        [
+          424.3279857397505,
+          337.9376114081997
+        ],
+        [
+          283.3279857397505,
+          337.9376114081997
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v10_044_t106450.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "Initial manual annotation from raw external-camera footage. Review each box in X-AnyLabeling before this batch is merged."
+}

@@ -101,6 +101,14 @@ def parse_args() -> argparse.Namespace:
         "--batch", type=Path, default=root / "dataset_work" / "camera_v9_annotation_batch"
     )
     parser.add_argument("--output", type=Path, default=root / "dataset_work" / "audit_dataset_v9")
+    parser.add_argument(
+        "--confirm-all-reviewed",
+        action="store_true",
+        help=(
+            "Accept every batch JSON as human reviewed even if X-AnyLabeling did not "
+            "persist checked=true. Use only after explicit human confirmation."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -136,6 +144,7 @@ def main() -> None:
     split_counts: Counter[str] = Counter()
     class_counts: Counter[str] = Counter()
     clipped_boxes: list[dict[str, object]] = []
+    confirmed_unchecked: list[str] = []
     source_names = {row["filename"] for row in source_rows}
     source_hashes = {row.get("sha256", "") for row in source_rows}
 
@@ -186,8 +195,10 @@ def main() -> None:
             continue
         annotation = json.loads(annotation_source.read_text(encoding="utf-8"))
         if annotation.get("checked") is not True:
-            errors.append(f"相机样本尚未在 AnyLabeling 中确认: {name}")
-            continue
+            if not args.confirm_all_reviewed:
+                errors.append(f"相机样本尚未在 AnyLabeling 中确认: {name}")
+                continue
+            confirmed_unchecked.append(name)
         image_hash = sha256(image_source)
         if image_hash in source_hashes:
             errors.append(f"相机批次与基础数据存在内容重复: {name}")
@@ -195,7 +206,7 @@ def main() -> None:
         row = {
             "filename": name,
             "dataset_split": "train",
-            "data_origin": "external_camera_v9",
+            "data_origin": batch_row.get("source_video", "external_camera"),
             "expected_class": "none",
             "annotation_origin": "xanylabeling_human_review",
             "box_count": "0",
@@ -224,6 +235,7 @@ def main() -> None:
         "boxes_by_class": dict(sorted(class_counts.items())),
         "empty_annotations": sum(row["box_count"] == "0" for row in merged_rows),
         "clipped_boxes": clipped_boxes,
+        "confirmed_unchecked_images": confirmed_unchecked,
         "audit_errors": [],
         "source_audit": str(audit),
         "camera_batch": str(batch),
@@ -232,8 +244,9 @@ def main() -> None:
         json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     (output / "README.md").write_text(
-        "# 审计数据集 v9\n\n"
-        "在 v8 审计数据集上合并外接摄像头人工复核批次。相机样本仅进入训练集；"
+        "# 外接摄像头增量审计数据集\n\n"
+        f"基础审计集：`{audit.name}`。新增人工复核批次：`{batch.name}`。"
+        "相机样本仅进入训练集；"
         "验证和测试集保持与该录制视频独立。\n",
         encoding="utf-8",
     )

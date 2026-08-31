@@ -1,0 +1,42 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "mask": null,
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          297.2869875222816,
+          52.42780748663097
+        ],
+        [
+          430.4278074866311,
+          52.42780748663097
+        ],
+        [
+          430.4278074866311,
+          473.9572192513369
+        ],
+        [
+          297.2869875222816,
+          473.9572192513369
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v10_053_t129050.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "Initial manual annotation from raw external-camera footage. Review each box in X-AnyLabeling before this batch is merged."
+}
