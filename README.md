@@ -57,6 +57,34 @@ bash scripts/check_ros2.sh
 这些样本仅进入训练集；原始图片不上传 GitHub。发现画面中确有鼠标的
 `c388d96805d52dd6e8cee9daea07f2ed.jpg` 已排除，避免将真实鼠标错误地作为背景。
 
+## 外接摄像头适配数据集（v9）
+
+为解决旧模型在外接摄像头画面中对鼠标和保温杯漏检的问题，2026-08-31
+将一段独立的外接摄像头录制视频人工复核后并入数据集。审计集位于
+`dataset_work/audit_dataset_v9/`，YOLO 导出集位于
+`dataset_work/audit_dataset_v9/yolo_export/`。
+
+- 审计集：1,098 张图片；其中 36 张为外接摄像头新样本。
+- 新相机样本：33 个 `mouse` 框、21 个 `cup` 框、2 张空标注负样本。
+- 可训练导出集：637 张图片，按 `train/val/test = 336/61/240` 划分；
+  共 800 个目标框（鼠标 495、杯子 305），另有 32 张负样本。
+- 审计集中保留 461 张 `excluded` 样本作为可追溯记录；导出器不会把它们写入
+  训练、验证或测试目录。
+
+合并和导出均由下列命令生成，运行前需先在 X-AnyLabeling 中复核相机批次：
+
+```powershell
+py -3.13 scripts/merge_camera_annotation_batch.py `
+  --audit dataset_work/audit_dataset_v8 `
+  --batch dataset_work/camera_v9_annotation_batch `
+  --output dataset_work/audit_dataset_v9
+py -3.13 scripts/export_audited_yolo.py `
+  --audit dataset_work/audit_dataset_v9 `
+  --output dataset_work/audit_dataset_v9/yolo_export
+py -3.13 scripts/verify_annotation_report.py `
+  dataset_work/audit_dataset_v9/yolo_export/export_report.json
+```
+
 ## sudo 密码
 
 用户 `tonyt` 当前不启用免密 sudo。需要自行设置密码时，在 PowerShell 中运行：

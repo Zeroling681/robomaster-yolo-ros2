@@ -14,9 +14,13 @@ def main() -> None:
 
     report = json.loads(args.report.read_text(encoding="utf-8"))
     errors: list[str] = []
-    image_count = int(report.get("image_count", 0))
-    exported_box_count = int(report.get("exported_box_count", 0))
-    split_counts = report.get("split_image_counts", {})
+    # Support both the original audit report schema and the current YOLO export
+    # report schema.  They describe the same invariants with different names.
+    image_count = int(report.get("image_count", report.get("images_total", report.get("exported_images", 0))))
+    exported_box_count = int(
+        report.get("exported_box_count", sum(int(value) for value in report.get("boxes_by_class", {}).values()))
+    )
+    split_counts = report.get("split_image_counts", report.get("split_counts", {}))
 
     if image_count <= 0 or exported_box_count <= 0:
         errors.append("没有可用于训练的图片或标注框")

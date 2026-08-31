@@ -86,6 +86,12 @@ def main() -> None:
     parser.add_argument("--conf", type=float, default=0.50)
     parser.add_argument("--iou", type=float, default=0.45)
     parser.add_argument("--save", type=Path, default=None)
+    parser.add_argument(
+        "--save-raw",
+        type=Path,
+        default=None,
+        help="Optional path for the unannotated camera stream used in later audits.",
+    )
     args = parser.parse_args()
     if not args.model.is_file():
         raise FileNotFoundError(args.model)
@@ -100,8 +106,11 @@ def main() -> None:
         raise RuntimeError(f"Could not open camera index {args.camera}")
 
     writer = None
+    raw_writer = None
     if args.save is not None:
         args.save.parent.mkdir(parents=True, exist_ok=True)
+    if args.save_raw is not None:
+        args.save_raw.parent.mkdir(parents=True, exist_ok=True)
     previous = time.perf_counter()
     fps = 0.0
     try:
@@ -109,6 +118,18 @@ def main() -> None:
             ok, frame = capture.read()
             if not ok:
                 continue
+            if raw_writer is None and args.save_raw is not None:
+                height, width = frame.shape[:2]
+                raw_writer = cv2.VideoWriter(
+                    str(args.save_raw),
+                    cv2.VideoWriter_fourcc(*"MJPG"),
+                    20.0,
+                    (width, height),
+                )
+                if not raw_writer.isOpened():
+                    raise RuntimeError(f"Could not open raw output video {args.save_raw}")
+            if raw_writer is not None:
+                raw_writer.write(frame)
             prepared, scale, pad_x, pad_y = letterbox(frame, args.imgsz)
             tensor = prepared[:, :, ::-1].transpose(2, 0, 1)[None].astype(np.float32) / 255.0
             output = session.run(None, {input_name: tensor})[0]
@@ -166,6 +187,8 @@ def main() -> None:
         capture.release()
         if writer is not None:
             writer.release()
+        if raw_writer is not None:
+            raw_writer.release()
         cv2.destroyAllWindows()
 
 
