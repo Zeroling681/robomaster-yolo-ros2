@@ -242,6 +242,31 @@ Shell 脚本会先进入对应 YOLO 导出目录，因为 `dataset.yaml` 使用 
 部署；复制到其他电脑时，需要先修改为实际项目路径和虚拟环境位置。v9、v10
 是微调流程，启动前还必须确认上一版本的 `weights/best.pt` 已存在。
 
+## 外置摄像头实时测试与录像
+
+在 Windows PowerShell 中运行下面的命令，可使用索引为 1 的外置摄像头测试
+v10 ONNX 模型，同时保存带检测框的视频和未标注的原始视频：
+
+```powershell
+py -3.13 scripts/live_camera_onnx.py `
+  --camera 1 `
+  --model runs/detect/mouse_cup_yolo11n_v10_clean_768/weights/best.onnx `
+  --mouse-conf 0.42 `
+  --cup-conf 0.50 `
+  --save results/v10_camera1_detected.avi `
+  --save-raw results/v10_camera1_raw.avi
+```
+
+- `--camera 1`：打开外置摄像头；内置摄像头通常为索引 0。
+- `--mouse-conf 0.42`：鼠标类别的最低置信度设为 0.42。
+- `--cup-conf 0.50`：杯子类别的最低置信度设为 0.50。
+- `--save`：保存包含检测框、类别、置信度和 FPS 的测试视频。
+- `--save-raw`：保存同次测试的原始视频，供错误复核、抽帧和重新标注。
+
+运行时按 `Q` 或 `Esc` 结束测试并关闭视频文件。原始视频可以用于复核误检、
+漏检和特殊角度，但这些错误仍需人工确认；实时程序本身无法在没有标准标注的
+情况下自动判断预测是否正确。
+
 ## sudo 密码
 
 用户 `tonyt` 当前不启用免密 sudo。需要自行设置密码时，在 PowerShell 中运行：
