@@ -85,6 +85,66 @@ py -3.13 scripts/verify_annotation_report.py `
   dataset_work/audit_dataset_v9/yolo_export/export_report.json
 ```
 
+## 数据清洗与初始标注工具
+
+为方便复现 v8 到 v10 的数据清洗过程，项目保留了两项独立工具。脚本只生成
+新的审计结果，不会直接删除原始图片。
+
+`exclude_oversized_training_samples.py` 用于排除训练集中占画面比例过大的目标框。
+默认以 v7 审计集为输入，将目标框面积超过图片面积 65% 的训练样本标记为
+`excluded_oversized_target`，并生成 v8 审计集和 `cleaning_report.json`：
+
+```powershell
+py -3.13 scripts/exclude_oversized_training_samples.py `
+  --audit dataset_work/audit_dataset_v7 `
+  --output dataset_work/audit_dataset_v8 `
+  --max-train-box-area 0.65
+```
+
+`apply_camera_v10_initial_labels.py` 为外接摄像头 v10 批次写入保守的第一轮人工框，
+重点覆盖蓝色保温杯和旧模型漏检的鼠标角度：
+
+```powershell
+py -3.13 scripts/apply_camera_v10_initial_labels.py `
+  --batch dataset_work/camera_v10_annotation_batch
+```
+
+脚本不会把未确认帧自动当作负样本。运行后仍需使用 X-AnyLabeling 逐张复核，
+确认框的位置、类别和遗漏目标，再执行合并与 YOLO 导出。
+
+## v8 置信度评估
+
+v8 模型保留了三组独立测试命令，用同一测试集比较不同置信度阈值对误检和
+漏检的影响：
+
+```bash
+bash scripts/evaluate_v8_conf025_wsl.sh  # conf=0.25，偏向召回率
+bash scripts/evaluate_v8_conf035_wsl.sh  # conf=0.35，折中设置
+bash scripts/evaluate_v8_wsl.sh          # conf=0.60，偏向精确率
+```
+
+三个脚本均使用 `imgsz=768`、`iou=0.45` 和 GPU 0，结果写入不同的运行目录，
+避免互相覆盖。评估时应同时查看每类 TP、FP、FN 和错误样本图片，不能只比较
+单个总分。
+
+## v7 至 v9 训练复现
+
+历史训练参数分别保存在独立 WSL 脚本中：
+
+```bash
+bash scripts/train_v7_wsl.sh
+bash scripts/train_v8_wsl.sh
+bash scripts/train_v9_camera_wsl.sh
+```
+
+- v7：从 YOLO11n 预训练权重开始，以 `imgsz=768` 训练 100 轮。
+- v8：使用清理后的 v8 导出集，以相同基础参数重新训练 100 轮。
+- v9：从 v8 最佳权重继续微调外接摄像头数据，训练 50 轮，并使用较低学习率
+  `lr0=0.001`，减少已学习特征被快速破坏的风险。
+
+这些脚本中的虚拟环境和 `/mnt/f/PycharmProjects/robomaster` 路径对应当前 WSL
+部署；复制到其他电脑时，需要先修改为实际项目路径和虚拟环境位置。
+
 ## sudo 密码
 
 用户 `tonyt` 当前不启用免密 sudo。需要自行设置密码时，在 PowerShell 中运行：
