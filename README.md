@@ -127,23 +127,120 @@ bash scripts/evaluate_v8_wsl.sh          # conf=0.60，偏向精确率
 避免互相覆盖。评估时应同时查看每类 TP、FP、FN 和错误样本图片，不能只比较
 单个总分。
 
-## v7 至 v9 训练复现
+## YOLO 版本与任务配置
 
-历史训练参数分别保存在独立 WSL 脚本中：
+本项目使用 Ultralytics `8.4.127` 提供的 YOLO11 检测接口，基础网络为
+YOLO11n，初始权重文件是 `/home/tonyt/models/yolo11n.pt`。任务为两类目标检测：
+
+```yaml
+names:
+  0: mouse
+  1: cup
+```
+
+训练入口为 `scripts/train_yolo.py`。它负责检查数据配置和初始权重、加载
+`ultralytics.YOLO`，统一设置 GPU、随机种子、缓存和输出目录；各数据版本的
+Shell 脚本负责传入本轮实验参数。环境中的主要固定版本为：
+
+- Python `3.10.12`
+- PyTorch `2.12.1+cu126`
+- Ultralytics `8.4.127`
+- OpenCV `4.10.0`
+- NumPy `1.26.4`
+
+可在 WSL 虚拟环境中安装或恢复 YOLO 依赖：
+
+```bash
+cd /mnt/f/PycharmProjects/robomaster
+source /home/tonyt/.venvs/robomaster/bin/activate
+python -m pip install -r requirements-yolo.txt
+python scripts/check_yolo.py
+```
+
+## v7 至 v10 训练参数
+
+各版本使用的完整入口参数如下。`lr0=auto` 表示脚本不显式传入初始学习率，
+由 Ultralytics 的 `optimizer=auto` 决定。v7、v8 的 `args.yaml` 虽然记录
+`lr0=0.01`，但自动优化器可以在启动时重新选择优化器和有效学习率，应以训练
+日志中的 optimizer 输出为准。
+
+| 版本 | 数据配置 | 初始权重 | epochs | patience | batch | imgsz | optimizer | lr0 | lrf | 输出名称 |
+| --- | --- | --- | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
+| v7 | `dataset_work/yolo_export_v7/dataset.yaml` | `yolo11n.pt` | 100 | 25 | 16 | 768 | `auto` | auto | 0.01 | `mouse_cup_yolo11n_v7_768` |
+| v8 | `dataset_work/yolo_export_v8/dataset.yaml` | `yolo11n.pt` | 100 | 25 | 16 | 768 | `auto` | auto | 0.01 | `mouse_cup_yolo11n_v8_768` |
+| v9 | `dataset_work/audit_dataset_v9/yolo_export/dataset.yaml` | v8 `best.pt` | 50 | 15 | 16 | 768 | `SGD` | 0.001 | 0.01 | `mouse_cup_yolo11n_v9_camera_768` |
+| v10 | `dataset_work/audit_dataset_v10/yolo_export/dataset.yaml` | v9 `best.pt` | 60 | 20 | 16 | 768 | `SGD` | 0.0005 | 0.01 | `mouse_cup_yolo11n_v10_clean_768` |
+
+`train_yolo.py` 对所有版本统一传入以下参数：
+
+| 参数 | 数值 | 作用 |
+| --- | --- | --- |
+| `device` | `0` | 使用第一块 CUDA GPU |
+| `workers` | `4` | 数据加载进程数 |
+| `cache` | `ram` | 将训练图片缓存到内存 |
+| `pretrained` | `True` | 从指定权重继续训练 |
+| `seed` | `20260824` | 固定随机种子 |
+| `deterministic` | `True` | 尽量保证实验可复现 |
+| `close_mosaic` | `10` | 最后 10 轮关闭 Mosaic |
+| `amp` | `True` | 启用混合精度训练 |
+| `plots` | `True` | 输出曲线、混淆矩阵等图片 |
+| `project` | `runs/detect` | 训练结果根目录 |
+| `exist_ok` | `False` | 防止覆盖同名实验目录 |
+
+实际训练产生的 `args.yaml` 还记录了以下 Ultralytics 参数。当前 v10 使用
+`momentum=0.937`、`weight_decay=0.0005`、`warmup_epochs=3.0`、
+`warmup_momentum=0.8`、`warmup_bias_lr=0.1`；检测损失权重为 `box=7.5`、
+`cls=0.5`、`dfl=1.5`。
+
+默认训练增强为 `hsv_h=0.015`、`hsv_s=0.7`、`hsv_v=0.4`、
+`translate=0.1`、`scale=0.5`、`fliplr=0.5`、`mosaic=1.0` 和
+`erasing=0.4`。当前没有启用额外旋转、剪切、透视、上下翻转、MixUp、
+CutMix 或 Copy-Paste，即 `degrees=0`、`shear=0`、`perspective=0`、
+`flipud=0`、`mixup=0`、`cutmix=0`、`copy_paste=0`。
+
+## 训练启动方式
+
+当前推荐训练版本是 v10。在 PowerShell 中进入 WSL 后启动：
+
+```powershell
+wsl -d Ubuntu-22.04
+```
+
+```bash
+cd /mnt/f/PycharmProjects/robomaster
+source /home/tonyt/.venvs/robomaster/bin/activate
+bash scripts/train_v10_camera_wsl.sh
+```
+
+也可以直接从 PowerShell 用一条命令启动：
+
+```powershell
+wsl -d Ubuntu-22.04 -- bash -lc `
+  "cd /mnt/f/PycharmProjects/robomaster && bash scripts/train_v10_camera_wsl.sh"
+```
+
+需要复现历史实验时，分别运行：
 
 ```bash
 bash scripts/train_v7_wsl.sh
 bash scripts/train_v8_wsl.sh
 bash scripts/train_v9_camera_wsl.sh
+bash scripts/train_v10_camera_wsl.sh
 ```
 
-- v7：从 YOLO11n 预训练权重开始，以 `imgsz=768` 训练 100 轮。
-- v8：使用清理后的 v8 导出集，以相同基础参数重新训练 100 轮。
-- v9：从 v8 最佳权重继续微调外接摄像头数据，训练 50 轮，并使用较低学习率
-  `lr0=0.001`，减少已学习特征被快速破坏的风险。
+Shell 脚本会先进入对应 YOLO 导出目录，因为 `dataset.yaml` 使用 `path: .`，
+必须从数据集目录解析 `images/train`、`images/val` 和 `images/test`。训练结果保存
+在 `runs/detect/<输出名称>/`，主要文件包括：
+
+- `weights/best.pt`：验证指标最佳的 PyTorch 权重；
+- `weights/last.pt`：最后一轮权重；
+- `args.yaml`：本次训练最终采用的全部参数；
+- `results.csv` 和 `results.png`：逐轮指标及训练曲线；
+- `confusion_matrix.png`：验证集混淆矩阵。
 
 这些脚本中的虚拟环境和 `/mnt/f/PycharmProjects/robomaster` 路径对应当前 WSL
-部署；复制到其他电脑时，需要先修改为实际项目路径和虚拟环境位置。
+部署；复制到其他电脑时，需要先修改为实际项目路径和虚拟环境位置。v9、v10
+是微调流程，启动前还必须确认上一版本的 `weights/best.pt` 已存在。
 
 ## sudo 密码
 
