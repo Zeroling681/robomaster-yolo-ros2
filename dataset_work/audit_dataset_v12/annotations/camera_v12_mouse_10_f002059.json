@@ -1,0 +1,85 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          37.0,
+          299.0
+        ],
+        [
+          273.0,
+          299.0
+        ],
+        [
+          273.0,
+          458.0
+        ],
+        [
+          37.0,
+          458.0
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "mask": null,
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          553.7130124777183,
+          0.0
+        ],
+        [
+          612.9590017825312,
+          142.76292335115863
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          476.7736185383244,
+          0.0
+        ],
+        [
+          536.6666666666666,
+          132.35472370766485
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v12_mouse_10_f002059.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "First-pass manual mouse boxes. Phone and other non-target objects stay unlabelled."
+}

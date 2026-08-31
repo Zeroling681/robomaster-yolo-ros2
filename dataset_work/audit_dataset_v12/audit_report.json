@@ -1,0 +1,46 @@
+{
+  "images_total": 1174,
+  "camera_images_added": 20,
+  "split_counts": {
+    "excluded": 461,
+    "test": 240,
+    "train": 412,
+    "val": 61
+  },
+  "boxes_by_class": {
+    "cup": 609,
+    "mouse": 894
+  },
+  "empty_annotations": 49,
+  "clipped_boxes": [
+    {
+      "filename": "camera_v12_mouse_10_f002059.jpg",
+      "count": 2
+    }
+  ],
+  "confirmed_unchecked_images": [
+    "camera_v12_mouse_01_f000201.jpg",
+    "camera_v12_mouse_02_f000363.jpg",
+    "camera_v12_mouse_03_f000444.jpg",
+    "camera_v12_mouse_04_f000565.jpg",
+    "camera_v12_mouse_05_f001494.jpg",
+    "camera_v12_mouse_06_f001534.jpg",
+    "camera_v12_mouse_07_f001898.jpg",
+    "camera_v12_mouse_08_f001938.jpg",
+    "camera_v12_mouse_09_f002019.jpg",
+    "camera_v12_mouse_10_f002059.jpg",
+    "camera_v12_phone_negative_01_f000646.jpg",
+    "camera_v12_phone_negative_02_f000767.jpg",
+    "camera_v12_phone_negative_03_f001009.jpg",
+    "camera_v12_phone_negative_04_f001050.jpg",
+    "camera_v12_phone_negative_05_f001171.jpg",
+    "camera_v12_phone_negative_06_f001211.jpg",
+    "camera_v12_phone_negative_07_f001332.jpg",
+    "camera_v12_phone_negative_08_f001575.jpg",
+    "camera_v12_phone_negative_09_f001615.jpg",
+    "camera_v12_phone_negative_10_f001655.jpg"
+  ],
+  "audit_errors": [],
+  "source_audit": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset_v11",
+  "camera_batch": "F:\\PycharmProjects\\robomaster\\dataset_work\\camera_v12_phone_mouse_annotation_batch"
+}
