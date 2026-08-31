@@ -1,0 +1,14 @@
+{
+  "exported_images": 637,
+  "negative_images": 32,
+  "excluded_pending": 461,
+  "split_counts": {
+    "train": 336,
+    "val": 61,
+    "test": 240
+  },
+  "boxes_by_class": {
+    "cup": 305,
+    "mouse": 495
+  }
+}

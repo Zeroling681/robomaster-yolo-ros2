@@ -1,0 +1,16 @@
+{
+  "batch": "F:\\PycharmProjects\\robomaster\\dataset_work\\camera_v9_annotation_batch",
+  "images_reviewed": 36,
+  "boxes_by_class": {
+    "cup": 11,
+    "mouse": 22
+  },
+  "reviewed_negative_images": [
+    "camera_v9_001_t002050.jpg",
+    "camera_v9_020_t031650.jpg",
+    "camera_v9_021_t032450.jpg",
+    "camera_v9_036_t057650.jpg"
+  ],
+  "initial_annotation_only": true,
+  "next_step": "Open all files in X-AnyLabeling, correct boxes or labels, then request merge."
+}

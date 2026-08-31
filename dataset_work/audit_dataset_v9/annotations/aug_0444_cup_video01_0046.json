@@ -1,0 +1,41 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          0.00036000000001035204,
+          0.23809523809530564
+        ],
+        [
+          208.33333333333326,
+          0.23809523809530564
+        ],
+        [
+          208.33333333333326,
+          920.21568
+        ],
+        [
+          0.00036000000001035204,
+          920.21568
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "aug_0444_cup_video01_0046.jpg",
+  "imageData": null,
+  "imageHeight": 1280,
+  "imageWidth": 720,
+  "description": ""
+}

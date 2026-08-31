@@ -1,0 +1,100 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          184.27450980392157,
+          247.62032085561498
+        ],
+        [
+          296.27450980392155,
+          247.62032085561498
+        ],
+        [
+          296.27450980392155,
+          322.620320855615
+        ],
+        [
+          184.27450980392157,
+          322.620320855615
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          330.9625668449198,
+          83.58288770053476
+        ],
+        [
+          395.13368983957224,
+          83.58288770053476
+        ],
+        [
+          395.13368983957224,
+          284.6524064171123
+        ],
+        [
+          330.9625668449198,
+          284.6524064171123
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          390.1426024955437,
+          160.9447415329768
+        ],
+        [
+          442.90552584670235,
+          160.9447415329768
+        ],
+        [
+          442.90552584670235,
+          184.83065953654187
+        ],
+        [
+          390.1426024955437,
+          184.83065953654187
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v9_023_t036550.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "Initial manual annotation from raw external-camera footage. User review required before this batch is merged into training."
+}
