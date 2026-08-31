@@ -19,8 +19,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model", type=Path, default=Path.home() / "models" / "yolo11n.pt")
     parser.add_argument("--name", default="mouse_cup_yolo11n")
     parser.add_argument("--epochs", type=int, default=100)
+    parser.add_argument("--patience", type=int, default=25)
     parser.add_argument("--batch", type=int, default=16)
     parser.add_argument("--imgsz", type=int, default=640)
+    parser.add_argument("--optimizer", default="auto")
+    parser.add_argument("--lr0", type=float, default=None, help="Initial learning rate; omit for Ultralytics auto tuning")
+    parser.add_argument("--lrf", type=float, default=0.01, help="Final learning-rate multiplier")
     return parser.parse_args()
 
 
@@ -37,25 +41,31 @@ def main() -> None:
         raise FileNotFoundError(f"Pretrained model not found: {pretrained_model}")
 
     model = YOLO(str(pretrained_model))
+    train_kwargs = {
+        "data": str(data_yaml),
+        "epochs": args.epochs,
+        "patience": args.patience,
+        "imgsz": args.imgsz,
+        "batch": args.batch,
+        "device": 0,
+        "workers": 4,
+        "cache": "ram",
+        "pretrained": True,
+        "optimizer": args.optimizer,
+        "lrf": args.lrf,
+        "seed": 20260824,
+        "deterministic": True,
+        "close_mosaic": 10,
+        "amp": True,
+        "plots": True,
+        "project": str(output_root),
+        "name": args.name,
+        "exist_ok": False,
+    }
+    if args.lr0 is not None:
+        train_kwargs["lr0"] = args.lr0
     model.train(
-        data=str(data_yaml),
-        epochs=args.epochs,
-        patience=25,
-        imgsz=args.imgsz,
-        batch=args.batch,
-        device=0,
-        workers=4,
-        cache="ram",
-        pretrained=True,
-        optimizer="auto",
-        seed=20260824,
-        deterministic=True,
-        close_mosaic=10,
-        amp=True,
-        plots=True,
-        project=str(output_root),
-        name=args.name,
-        exist_ok=False,
+        **train_kwargs,
     )
 
 
