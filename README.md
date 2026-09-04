@@ -416,8 +416,9 @@ source ~/yolo_ros2_ws/install/setup.bash
 ros2 topic echo /yolo/detections
 ```
 
-当前仓库证据能证明包成功构建并注册节点；最终现场验收前仍应在已连接摄像头的
-Jetson 上保存一次 `ros2 topic echo /yolo/detections` 输出或截图，作为真实运行证据。
+当前仓库证据已证明包成功构建、注册节点，并在 WSL 中用最终 v13 权重和真实录像
+发布过非空的 `vision_msgs/msg/Detection2DArray`。最终现场验收前仍应在已连接摄像头的
+Jetson 上保存一次 `ros2 topic echo /yolo/detections` 输出或截图，作为实机运行证据。
 仓库提供了一键采证脚本。运行前把鼠标或杯子放入画面；参数依次为摄像头索引、
 模型路径和已构建的 ROS 2 工作区：
 
@@ -430,6 +431,15 @@ bash scripts/capture_jetson_ros2_evidence.sh 0 \
 
 脚本会验证摄像头和模型，启动检测节点，并把 topic 类型、一次包含有效目标的消息、
 topic 频率、节点日志和带框视频统一保存到 `/home/nvidia/jetson_yolo/results/`。
+
+如果 Jetson 暂未连接，可在 WSL 中用最终权重和已录视频验证同一节点的完整消息链路：
+
+```powershell
+wsl -d Ubuntu-22.04 -u tonyt bash `
+  /mnt/f/PycharmProjects/robomaster/scripts/verify_ros2_video_runtime.sh
+```
+
+该结果只证明模型、节点和 `vision_msgs` 消息可端到端运行，不能替代 Jetson 实机证据。
 
 ### 英文实验报告
 

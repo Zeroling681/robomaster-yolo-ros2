@@ -425,7 +425,7 @@ def build() -> None:
     report.p("I built a two class detector for computer mice and drinking cups, with the complete route from data capture to Jetson deployment. The final version is YOLO11n v13. It was fine tuned at an input size of 768 pixels and exported as both PyTorch and ONNX weights. The live program draws the class name, bounding box, confidence and smoothed frame rate, while an added ROS 2 node publishes the same detections as vision_msgs messages.")
     report.p("The final exported dataset contains 793 images: 492 training images, 61 validation images and 240 held out test images. The training partition contains 49 empty label files that intentionally act as hard negative samples. These negatives were important because earlier models often treated black phones, chair backs, robot shells and laptop edges as mice. Version 13 adds eighty manually reviewed frames, mainly horizontal cups, new backgrounds and difficult mouse poses.")
     report.p("For the practical acceptance check, I selected twenty clearly different viewing conditions. Eighteen scenes passed the strict rule that every expected target must be detected and no extra false box may appear. The resulting scene accuracy is 90 percent, which exceeds the required 80 percent. Eighteen selected scenes come directly from Jetson recordings. Two horizontal cup scenes come from a v13 ONNX replay of the original raw capture; they were added because the older CUP3 clip was upright and unsuccessful, so it could not prove horizontal cup recognition.")
-    report.p("The selected Jetson evidence frames show reported speeds from 15.7 to 21.2 FPS, with a mean of about 17.9 FPS. This is comfortably above the required 5 FPS. I also completed and built a ROS 2 Humble package named yolo_detection_ros2. It publishes Detection2DArray messages on the /yolo/detections topic and can save the rendered stream. A real Jetson topic echo remains the correct final classroom demonstration, but the source package and colcon build verification are now part of the submission.")
+    report.p("The selected Jetson evidence frames show reported speeds from 15.7 to 21.2 FPS, with a mean of about 17.9 FPS. This is comfortably above the required 5 FPS. I also completed a ROS 2 Humble package named yolo_detection_ros2. A recorded-video integration run published a real Detection2DArray containing a horizontal cup at 0.822 confidence, while the measured topic rate stayed near 35 Hz in WSL. A Jetson topic echo remains the correct final classroom hardware proof, so I keep that distinction explicit.")
     report.figure(ASSETS / "acceptance_results.png", "Figure 1  Summary of the measured acceptance results", 6.9)
 
     report.page("1 Requirements and Evidence")
@@ -440,11 +440,11 @@ def build() -> None:
             ["Twenty angles at 80 percent", "18 correct scenes from 20 selected scenes", "Met at 90 percent"],
             ["At least 5 FPS on Jetson", "15.7 to 21.2 FPS in selected Jetson frames", "Met"],
             ["Save results and errors", "Annotated and raw video outputs plus review frames", "Met"],
-            ["ROS 2 detection publishing", "Built yolo_detection_ros2 package", "Implementation met"],
+            ["ROS 2 detection publishing", "Built package and saved a non-empty WSL topic message", "Runtime verified; Jetson echo pending"],
         ],
         [2.0, 3.8, 1.2],
     )
-    report.p("The distinction between implementation and runtime evidence matters for ROS 2. The package compiles in the configured Ubuntu 22.04 ROS 2 Humble environment, but a saved ros2 topic echo from the Jetson would be stronger than source code alone. I therefore describe the node as implemented and build verified, without inventing a live topic capture that is not stored in the repository.")
+    report.p("The distinction between software evidence and hardware evidence matters for ROS 2. The package compiles in Ubuntu 22.04 ROS 2 Humble and the repository now stores a real topic echo produced by the final v13 model during recorded-video replay. That run proves message construction and DDS publication, but it is not labelled as Jetson proof. A short topic echo captured on the connected board is still the final hardware check.")
     report.bullets([
         "Accuracy is scene based because the teacher accepted twenty angles rather than twenty unique object instances.",
         "The horizontal cup evidence is included as an explicit supplement and not mixed into the Jetson FPS calculation.",
@@ -690,7 +690,8 @@ def build() -> None:
     report.p("Each Detection2D message contains a bounding box centre, width and height, a text class ID and a floating point confidence score. The array header contains the camera frame name and ROS time. A receiving robot node can subscribe to /yolo/detections and make decisions without reading pixels or parsing console output.")
     report.code("cd ~/yolo_ros2_ws\nsource /opt/ros/humble/setup.bash\ncolcon build --symlink-install\nsource install/setup.bash\nros2 launch yolo_detection_ros2 detector.launch.py")
     report.code("ros2 topic info /yolo/detections\nros2 topic echo /yolo/detections --once\nros2 topic hz /yolo/detections")
-    report.p("I verified the package with colcon build in Ubuntu 22.04, and ROS 2 lists the detector_node executable. The best final demonstration is to reconnect the Jetson, launch the package and save one topic echo together with the live video. Until that final live capture is made, the report treats message publication as implemented and build verified rather than claiming a stored runtime message.")
+    report.p("I verified the package with colcon build in Ubuntu 22.04, and ROS 2 lists the detector_node executable. I then replayed the horizontal-cup result through the same node. The saved topic record reports one publisher of type vision_msgs/msg/Detection2DArray and contains a cup box with confidence 0.8217. The observed WSL topic rate was about 34 to 35 Hz. This proves the message path at runtime; the Jetson camera echo remains a separate hardware acceptance record.")
+    report.code("wsl -d Ubuntu-22.04 -u tonyt bash /mnt/f/PycharmProjects/robomaster/scripts/verify_ros2_video_runtime.sh\n# Evidence: results/ros2_v13_wsl_video_runtime_evidence.txt")
 
     report.page("23 Saving Results and Typical Errors")
     report.p("The experiment saves three useful forms of evidence. Annotated AVI files show the visible output expected by the teacher. Raw AVI files preserve the original camera frames for later replay. Review directories contain contact sheets, selected still frames, CSV scoring tables and JSON run summaries. Together they support both demonstration and diagnosis.")
@@ -730,6 +731,8 @@ def build() -> None:
     report.code("py -3.13 scripts/live_camera_onnx.py --camera 1 --model runs/detect/mouse_cup_yolo11n_v13_horizontal_cup_768/weights/best.onnx --mouse-conf 0.75 --cup-conf 0.75 --save results/v13_detected.avi --save-raw results/v13_raw.avi")
     report.heading("25 5 ROS 2 Build", 2)
     report.code("mkdir -p ~/yolo_ros2_ws/src\ncp -r ros2/yolo_detection_ros2 ~/yolo_ros2_ws/src/\ncd ~/yolo_ros2_ws\nsource /opt/ros/humble/setup.bash\ncolcon build --symlink-install")
+    report.heading("25 6 ROS 2 Runtime Verification", 2)
+    report.code("wsl -d Ubuntu-22.04 -u tonyt bash /mnt/f/PycharmProjects/robomaster/scripts/verify_ros2_video_runtime.sh")
 
     report.page("26 Submission Artifact Inventory")
     report.table(
@@ -740,7 +743,7 @@ def build() -> None:
             ["ONNX model", "runs detect mouse_cup_yolo11n_v13_horizontal_cup_768 weights best.onnx"],
             ["Windows program", "scripts live_camera_onnx.py"],
             ["Jetson program", "scripts live_camera_pt.py"],
-            ["ROS 2 package", "ros2 yolo_detection_ros2"],
+            ["ROS 2 package and proof", "ros2 yolo_detection_ros2 and results ros2_v13_wsl_video_runtime_evidence.txt"],
             ["Jetson videos", "results v13 Jetson camera1 detected files"],
             ["Horizontal cup video", "results v13_horizontal_cup_success_detected.avi"],
             ["Twenty angle score", "results v13_submission_review v13_20_angle_results_with_horizontal_cup.csv"],
@@ -769,7 +772,7 @@ def build() -> None:
     report.page("28 Conclusion")
     report.p("This experiment produced a complete two class object detection workflow for mouse and cup recognition. I collected and reviewed data, converted the annotations into YOLO format, trained a sequence of models, analysed real camera errors, and refined the dataset with targeted positives and hard negatives. The final v13 model adds the horizontal cup pose that was missing from earlier evidence.")
     report.p("The practical twenty angle evaluation records eighteen correct scenes out of twenty, which is 90 percent and exceeds the required 80 percent. Jetson evidence runs between 15.7 and 21.2 FPS in the selected frames, safely above the 5 FPS requirement. The result videos display the target class, bounding box, confidence and FPS, and the program can store both annotated and raw streams.")
-    report.p("The ROS 2 package publishes standard Detection2DArray messages and has passed a clean colcon build. The remaining best practice before the classroom demonstration is to run ros2 topic echo once on the connected Jetson and retain that console capture. The report does not hide this distinction. Overall, the submission now demonstrates the full engineering path from imperfect raw footage to a reproducible embedded detector, while keeping the two remaining mouse misses visible as honest limits of the current dataset.")
+    report.p("The ROS 2 package publishes standard Detection2DArray messages, has passed a clean colcon build and has produced a stored non-empty cup message during an end-to-end WSL replay. The remaining best practice before the classroom demonstration is to run ros2 topic echo once on the connected Jetson and retain that console capture. The report does not hide this distinction. Overall, the submission demonstrates the path from imperfect raw footage to a reproducible embedded detector, while keeping the two remaining mouse misses visible as honest limits of the current dataset.")
 
     report.page("Appendix A Key Source Code Responsibilities")
     report.table(

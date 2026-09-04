@@ -21,6 +21,7 @@ class YoloDetectionPublisher(Node):
         super().__init__("yolo_detection_publisher")
         self.declare_parameter("model", "/home/nvidia/jetson_yolo/best.pt")
         self.declare_parameter("camera", 0)
+        self.declare_parameter("source", "")
         self.declare_parameter("image_size", 768)
         self.declare_parameter("mouse_confidence", 0.75)
         self.declare_parameter("cup_confidence", 0.75)
@@ -48,13 +49,25 @@ class YoloDetectionPublisher(Node):
         self.publisher = self.create_publisher(Detection2DArray, topic, 10)
         self.model = YOLO(str(model_path))
 
+        source_value = str(self.get_parameter("source").value).strip()
         camera_index = int(self.get_parameter("camera").value)
-        self.capture = cv2.VideoCapture(camera_index, cv2.CAP_V4L2)
+        self.is_file_source = bool(source_value)
+        if self.is_file_source:
+            input_path = Path(source_value).expanduser()
+            if not input_path.is_file():
+                raise FileNotFoundError(input_path)
+            capture_source: int | str = str(input_path)
+            source_description = str(input_path)
+            self.capture = cv2.VideoCapture(capture_source)
+        else:
+            capture_source = camera_index
+            source_description = f"/dev/video{camera_index}"
+            self.capture = cv2.VideoCapture(capture_source, cv2.CAP_V4L2)
+            if not self.capture.isOpened():
+                self.capture.release()
+                self.capture = cv2.VideoCapture(capture_source)
         if not self.capture.isOpened():
-            self.capture.release()
-            self.capture = cv2.VideoCapture(camera_index)
-        if not self.capture.isOpened():
-            raise RuntimeError(f"Could not open /dev/video{camera_index}")
+            raise RuntimeError(f"Could not open input: {source_description}")
 
         self.source_fps = float(self.capture.get(cv2.CAP_PROP_FPS))
         if not 1.0 <= self.source_fps <= 120.0:
@@ -62,14 +75,20 @@ class YoloDetectionPublisher(Node):
         self.writer: cv2.VideoWriter | None = None
         self.smoothed_fps = 0.0
         self.previous_frame_time = time.perf_counter()
+        self.finished = False
         self.timer = self.create_timer(0.001, self.process_frame)
         self.get_logger().info(
-            f"Publishing detections on {topic} from /dev/video{camera_index}"
+            f"Publishing detections on {topic} from {source_description}"
         )
 
     def process_frame(self) -> None:
         ok, frame = self.capture.read()
         if not ok:
+            if self.is_file_source:
+                self.get_logger().info("Input video finished")
+                self.finished = True
+                self.timer.cancel()
+                return
             self.get_logger().warning("Camera did not return a frame")
             return
 
@@ -127,7 +146,14 @@ class YoloDetectionPublisher(Node):
                 cv2.LINE_AA,
             )
 
-        self.publisher.publish(message)
+        try:
+            self.publisher.publish(message)
+        except Exception:
+            # Ctrl-C can invalidate the ROS context while this timer callback is
+            # finishing an inference. That is a normal shutdown, not a failure.
+            if rclpy.ok():
+                raise
+            return
         now = time.perf_counter()
         instant_fps = 1.0 / max(now - self.previous_frame_time, 1e-6)
         self.previous_frame_time = now
@@ -178,7 +204,8 @@ def main(args: list[str] | None = None) -> None:
     node: YoloDetectionPublisher | None = None
     try:
         node = YoloDetectionPublisher()
-        rclpy.spin(node)
+        while rclpy.ok() and not node.finished:
+            rclpy.spin_once(node)
     except KeyboardInterrupt:
         pass
     finally:

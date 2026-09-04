@@ -1,0 +1,118 @@
+YOLO v13 ROS 2 recorded-video integration evidence
+timestamp=2026-09-04T23:56:50+08:00
+environment=WSL 2 Ubuntu 22.04 ROS 2 Humble
+model=/mnt/f/PycharmProjects/robomaster/runs/detect/mouse_cup_yolo11n_v13_horizontal_cup_768/weights/best.pt
+source=/mnt/f/PycharmProjects/robomaster/results/v13_horizontal_cup_success_detected.avi
+topic=/yolo/detections
+scope=runtime message verification only; not Jetson hardware evidence
+
+--- package executable ---
+yolo_detection_ros2 detector_node
+
+--- topic info ---
+Type: vision_msgs/msg/Detection2DArray
+
+Publisher count: 1
+
+Node name: yolo_detection_publisher
+Node namespace: /
+Topic type: vision_msgs/msg/Detection2DArray
+Endpoint type: PUBLISHER
+GID: 01.0f.3d.48.cc.01.19.79.00.00.00.00.00.00.11.03.00.00.00.00.00.00.00.00
+QoS profile:
+  Reliability: RELIABLE
+  History (Depth): UNKNOWN
+  Durability: VOLATILE
+  Lifespan: Infinite
+  Deadline: Infinite
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: Infinite
+
+Subscription count: 0
+
+
+--- cup detection message ---
+header:
+  stamp:
+    sec: 1788537421
+    nanosec: 333248279
+  frame_id: camera
+detections:
+- header:
+    stamp:
+      sec: 1788537421
+      nanosec: 333248279
+    frame_id: camera
+  results:
+  - hypothesis:
+      class_id: cup
+      score: 0.8217422366142273
+    pose:
+      pose:
+        position:
+          x: 0.0
+          y: 0.0
+          z: 0.0
+        orientation:
+          x: 0.0
+          y: 0.0
+          z: 0.0
+          w: 1.0
+      covariance:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+  bbox:
+    center:
+      position:
+        x: 269.1884765625
+        y: 215.86859512329102
+      theta: 0.0
+    size_x: 538.376953125
+    size_y: 225.34355926513672
+  id: cup_0
+---
+
+--- topic rate ---
+average rate: 34.177
+	min: 0.025s max: 0.036s std dev: 0.00279s window: 36
+average rate: 35.099
+	min: 0.023s max: 0.036s std dev: 0.00298s window: 73
+average rate: 34.980
+	min: 0.023s max: 0.036s std dev: 0.00287s window: 108
+
+node_log=/mnt/f/PycharmProjects/robomaster/results/ros2_v13_wsl_video_runtime_node.log
+rendered_video=/mnt/f/PycharmProjects/robomaster/results/ros2_v13_wsl_video_runtime.avi

@@ -41,6 +41,17 @@ ros2 run yolo_detection_ros2 detector_node --ros-args \
   -p cup_confidence:=0.75
 ```
 
+For a repeatable integration check without a live camera, pass a recorded file
+through the optional `source` parameter. When `source` is set, it takes
+precedence over `camera` and the node exits after the final frame:
+
+```bash
+ros2 run yolo_detection_ros2 detector_node --ros-args \
+  -p source:=/home/nvidia/jetson_yolo/results/test.avi \
+  -p model:=/home/nvidia/jetson_yolo/best.pt \
+  -p show:=false
+```
+
 To capture a submission-ready runtime record (topic metadata, one non-empty
 detection message, topic frequency, node log and annotated video), run the
 repository helper while a mouse or cup is visible:
