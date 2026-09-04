@@ -40,3 +40,14 @@ ros2 run yolo_detection_ros2 detector_node --ros-args \
   -p mouse_confidence:=0.75 \
   -p cup_confidence:=0.75
 ```
+
+To capture a submission-ready runtime record (topic metadata, one non-empty
+detection message, topic frequency, node log and annotated video), run the
+repository helper while a mouse or cup is visible:
+
+```bash
+cd /home/nvidia/jetson_yolo
+bash scripts/capture_jetson_ros2_evidence.sh 0 \
+  /home/nvidia/jetson_yolo/best.pt \
+  /home/nvidia/yolo_ros2_ws
+```

@@ -402,10 +402,10 @@ colcon build --symlink-install
 source install/setup.bash
 
 ros2 run yolo_detection_ros2 detector_node --ros-args \
-  -p model_path:=/home/nvidia/jetson_yolo/best.pt \
-  -p camera_index:=0 \
-  -p mouse_conf:=0.75 \
-  -p cup_conf:=0.75
+  -p model:=/home/nvidia/jetson_yolo/best.pt \
+  -p camera:=0 \
+  -p mouse_confidence:=0.75 \
+  -p cup_confidence:=0.75
 ```
 
 另开终端可验证发布内容：
@@ -418,6 +418,18 @@ ros2 topic echo /yolo/detections
 
 当前仓库证据能证明包成功构建并注册节点；最终现场验收前仍应在已连接摄像头的
 Jetson 上保存一次 `ros2 topic echo /yolo/detections` 输出或截图，作为真实运行证据。
+仓库提供了一键采证脚本。运行前把鼠标或杯子放入画面；参数依次为摄像头索引、
+模型路径和已构建的 ROS 2 工作区：
+
+```bash
+cd /home/nvidia/jetson_yolo
+bash scripts/capture_jetson_ros2_evidence.sh 0 \
+  /home/nvidia/jetson_yolo/best.pt \
+  /home/nvidia/yolo_ros2_ws
+```
+
+脚本会验证摄像头和模型，启动检测节点，并把 topic 类型、一次包含有效目标的消息、
+topic 频率、节点日志和带框视频统一保存到 `/home/nvidia/jetson_yolo/results/`。
 
 ### 英文实验报告
 
