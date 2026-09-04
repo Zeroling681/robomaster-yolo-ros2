@@ -1,0 +1,41 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          74.63458110516936,
+          150.2495543672014
+        ],
+        [
+          413.67201426024957,
+          150.2495543672014
+        ],
+        [
+          413.67201426024957,
+          335.27629233511584
+        ],
+        [
+          74.63458110516936,
+          335.27629233511584
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v13_064_t121050.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "Initial v12 ONNX predictions only. Review every visible mouse and cup, correct inaccurate boxes, add missed horizontal cups, then mark checked."
+}

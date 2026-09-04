@@ -1,0 +1,134 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": false,
+  "shapes": [
+    {
+      "mask": null,
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          15.454545454545503,
+          0.0
+        ],
+        [
+          164.47415329768273,
+          0.0
+        ],
+        [
+          164.47415329768273,
+          220.83778966131905
+        ],
+        [
+          15.454545454545503,
+          220.83778966131905
+        ]
+      ],
+      "group_id": null,
+      "description": "v12 ONNX prelabel confidence=0.3473",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {
+        "prelabel": true
+      },
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          415.0,
+          0.0
+        ],
+        [
+          476.0,
+          0.0
+        ],
+        [
+          476.0,
+          42.0
+        ],
+        [
+          415.0,
+          42.0
+        ]
+      ],
+      "group_id": null,
+      "description": "v12 ONNX prelabel confidence=0.1431",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {
+        "prelabel": true
+      },
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          50.748663101604315,
+          109.60784313725485
+        ],
+        [
+          512.0677361853832,
+          109.60784313725485
+        ],
+        [
+          512.0677361853832,
+          321.01604278074865
+        ],
+        [
+          50.748663101604315,
+          321.01604278074865
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          134.17112299465245,
+          0.8734402852049947
+        ],
+        [
+          276.06060606060606,
+          0.8734402852049947
+        ],
+        [
+          276.06060606060606,
+          152.03208556149733
+        ],
+        [
+          134.17112299465245,
+          152.03208556149733
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v13_071_t135350.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "Initial v12 ONNX predictions only. Review every visible mouse and cup, correct inaccurate boxes, add missed horizontal cups, then mark checked."
+}

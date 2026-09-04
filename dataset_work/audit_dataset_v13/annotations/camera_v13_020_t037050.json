@@ -1,0 +1,105 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          522.0,
+          58.0
+        ],
+        [
+          601.0,
+          58.0
+        ],
+        [
+          601.0,
+          102.0
+        ],
+        [
+          522.0,
+          102.0
+        ]
+      ],
+      "group_id": null,
+      "description": "v12 ONNX prelabel confidence=0.4946",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {
+        "prelabel": true
+      },
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          311.0,
+          96.0
+        ],
+        [
+          418.0,
+          96.0
+        ],
+        [
+          418.0,
+          164.0
+        ],
+        [
+          311.0,
+          164.0
+        ]
+      ],
+      "group_id": null,
+      "description": "v12 ONNX prelabel confidence=0.2962",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {
+        "prelabel": true
+      },
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          602.620320855615,
+          80.01782531194296
+        ],
+        [
+          639.0,
+          80.01782531194296
+        ],
+        [
+          639.0,
+          119.94652406417109
+        ],
+        [
+          602.620320855615,
+          119.94652406417109
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v13_020_t037050.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "Initial v12 ONNX predictions only. Review every visible mouse and cup, correct inaccurate boxes, add missed horizontal cups, then mark checked."
+}

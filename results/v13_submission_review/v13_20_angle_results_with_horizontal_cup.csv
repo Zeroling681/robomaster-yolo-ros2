@@ -1,0 +1,24 @@
+﻿test_id,video,timestamp_s,expected,angle_description,platform,result
+1,v13_Jetson_camera1_detected_cup1.avi,0.9,cup,upright front,Jetson,correct
+2,v13_Jetson_camera1_detected_cup1.avi,2.8,cup,upright alternate side,Jetson,correct
+3,v13_horizontal_cup_success_detected.avi,3.5,cup,horizontal right-facing,offline v13 ONNX,correct
+4,v13_horizontal_cup_success_detected.avi,8.5,cup,horizontal shifted view,offline v13 ONNX,correct
+5,v13_Jetson_camera1_detected_cup1.avi,8.3,cup,tilted diagonal,Jetson,correct
+6,v13_Jetson_camera1_detected_cup2.avi,1.0,cup,blue cup front,Jetson,correct
+7,v13_Jetson_camera1_detected_cup2.avi,5.0,cup,blue cup alternate side,Jetson,correct
+8,v13_Jetson_camera1_detected_cup2.avi,15.0,cup,blue cup offset,Jetson,correct
+9,v13_Jetson_camera1_detected_cupboth.avi,3.6,cup+cup,two cups together,Jetson,correct
+10,v13_Jetson_camera1_detected_mouseCUP.avi,1.2,mouse+cup,two classes together,Jetson,correct
+11,v13_Jetson_camera1_detected_mouse1.avi,3.8,mouse,left side,Jetson,correct
+12,v13_Jetson_camera1_detected_mouse1.avi,6.4,mouse,front diagonal,Jetson,correct
+13,v13_Jetson_camera1_detected_mouse1.avi,14.0,mouse,low side profile,Jetson,correct
+14,v13_Jetson_camera1_detected_mouse1.avi,16.6,mouse,top diagonal,Jetson,correct
+15,v13_Jetson_camera1_detected_mouse1.avi,21.7,mouse,rotated top,Jetson,correct
+16,v13_Jetson_camera1_detected_mouse1.avi,24.2,mouse,right side,Jetson,correct
+17,v13_Jetson_camera1_detected_mouse1.avi,29.3,mouse,underside horizontal,Jetson,correct
+18,v13_Jetson_camera1_detected_mouse1.avi,34.4,mouse,underside diagonal,Jetson,correct
+19,v13_Jetson_camera1_detected_mouse2.avi,22.5,mouse,extreme side profile,Jetson,incorrect_missed
+20,v13_Jetson_camera1_detected_mouse3.avi,7.6,mouse,underside,Jetson,incorrect_missed
+
+summary,correct,incorrect,total,accuracy
+strict_scene_accuracy,18,2,20,90.0%

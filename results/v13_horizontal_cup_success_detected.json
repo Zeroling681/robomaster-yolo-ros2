@@ -1,0 +1,17 @@
+{
+  "input": "F:\\PycharmProjects\\robomaster\\dataset_work\\camera_v13_cup_horizontal_capture\\cup_horizontal_raw.avi",
+  "output": "F:\\PycharmProjects\\robomaster\\results\\v13_horizontal_cup_success_detected.avi",
+  "model": "F:\\PycharmProjects\\robomaster\\runs\\detect\\mouse_cup_yolo11n_v13_horizontal_cup_768\\weights\\best.onnx",
+  "source_fps": 20.0,
+  "source_duration_seconds": 153.45,
+  "selected_start_seconds": 0.0,
+  "selected_end_seconds": 13.0,
+  "processed_frames": 261,
+  "processing_seconds": 15.459,
+  "average_processing_fps": 16.884,
+  "frames_with_mouse": 260,
+  "frames_with_cup": 207,
+  "mouse_confidence_threshold": 0.75,
+  "cup_confidence_threshold": 0.75,
+  "iou_threshold": 0.45
+}

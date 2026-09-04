@@ -1,0 +1,70 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          134.17112299465245,
+          71.46167557932263
+        ],
+        [
+          537.7361853832442,
+          71.46167557932263
+        ],
+        [
+          537.7361853832442,
+          391.2477718360071
+        ],
+        [
+          134.17112299465245,
+          391.2477718360071
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          130.96256684491982,
+          0.0
+        ],
+        [
+          257.8787878787879,
+          0.0
+        ],
+        [
+          257.8787878787879,
+          108.18181818181814
+        ],
+        [
+          130.96256684491982,
+          108.18181818181814
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v13_035_t066350.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "Initial v12 ONNX predictions only. Review every visible mouse and cup, correct inaccurate boxes, add missed horizontal cups, then mark checked."
+}

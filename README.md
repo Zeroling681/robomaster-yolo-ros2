@@ -1,5 +1,8 @@
 # 桌面物体目标检测实验
 
+实验一报告初稿见 [`docs/experiment_report.md`](docs/experiment_report.md)。报告按
+验收条目整理数据集、模型、程序、测试视频和当前待补证据。
+
 开发环境运行在 WSL 2 的 Ubuntu 22.04 中，Ubuntu 虚拟磁盘位于
 `F:\WSL\Ubuntu-22.04`。已配置 ROS 2 Humble、Cyclone DDS、视觉消息、
 OpenCV、PyTorch CUDA 和 Ultralytics。
@@ -317,6 +320,112 @@ test 240，共 713 张图片，包含 46 张空标签负样本、566 个鼠标�
 ```bash
 bash scripts/train_v12_phone_hard_negative_wsl.sh
 ```
+
+### v13 杯子平放专项数据与最终模型
+
+v13 在 v12 的基础上加入杯子完全平放、倾斜、不同背景和不同距离的人工复核样本，
+解决旧视频只能证明杯子直立识别的问题。最终导出目录为
+`dataset_work/audit_dataset_v13/yolo_export/`，共 793 张图片：train 492、val 61、
+test 240；包含 635 个鼠标框、422 个杯子框和 55 张空标签难负样本。
+
+训练使用 YOLO11n，从 v12 最佳权重继续微调，主要参数为：40 epochs、patience 12、
+batch 16、imgsz 768、SGD、lr0 0.00015、lrf 0.01、momentum 0.937、
+weight_decay 0.0005。启动命令：
+
+```powershell
+wsl -d Ubuntu-22.04 -- bash -lc `
+  "cd /mnt/f/PycharmProjects/robomaster && bash scripts/train_v13_horizontal_cup_wsl.sh"
+```
+
+最佳验证结果出现在第 27 轮：precision 0.856、recall 0.776、mAP50 0.886、
+mAP50-95 0.715。独立测试集结果为 precision 0.706、recall 0.635、mAP50 0.677、
+mAP50-95 0.374。模型文件位于：
+
+- `runs/detect/mouse_cup_yolo11n_v13_horizontal_cup_768/weights/best.pt`
+- `runs/detect/mouse_cup_yolo11n_v13_horizontal_cup_768/weights/best.onnx`
+
+本地可复现副本位于 `models/v13/`。GitHub 提交使用不依赖 Git LFS 的
+`release/experiment_one_v13_model.zip`，其中包含相同的 PT、ONNX、参数和曲线。
+
+Windows 外置摄像头实时检测和双路录像命令：
+
+```powershell
+py -3.13 scripts/live_camera_onnx.py `
+  --camera 1 `
+  --model runs/detect/mouse_cup_yolo11n_v13_horizontal_cup_768/weights/best.onnx `
+  --mouse-conf 0.75 `
+  --cup-conf 0.75 `
+  --save results/v13_camera1_detected.avi `
+  --save-raw results/v13_camera1_raw.avi
+```
+
+### v13 最终 20 角度证据
+
+最终人工复核表为
+`results/v13_submission_review/v13_20_angle_results_with_horizontal_cup.csv`，结果为
+18/20，严格场景正确率 90%，高于 80% 的验收要求。18 个场景来自 Jetson 实时录像，
+另 2 个场景来自 v13 ONNX 对杯子完全平放原始录像的离线重放。所选 Jetson 帧显示
+15.7–21.2 FPS，平均约 17.9 FPS，高于 5 FPS 要求。
+
+最终证据文件：
+
+- `results/v13_submission_review/v13_20_angle_evidence_with_horizontal_cup.jpg`
+- `results/v13_submission_review/v13_20_angle_results_with_horizontal_cup.csv`
+- `results/v13_horizontal_cup_success_detected.avi`
+- `results/v13_horizontal_cup_success_detected.json`
+- `results/v13_submission_review/v13_horizontal_cup_success_detected_contact_sheet.jpg`
+
+代表视频和最终统计也打包为普通 Git 文件
+`release/experiment_one_v13_video_evidence.zip`，可在没有 Git LFS 时直接下载。
+
+平放杯视频共处理 261 帧，其中 207 帧检测到杯子（79.3% 帧覆盖率）。旧文件
+`v13_Jetson_camera1_detected_CUP3.avi` 只保留为历史测试，未用于最终评分，
+也未出现在 20 角度表中。证据图可用下面的命令重新生成：
+
+```powershell
+py -3.13 scripts/build_v13_submission_evidence.py
+```
+
+### ROS 2 检测结果发布
+
+`ros2/yolo_detection_ros2/` 是 ROS 2 Humble Python 包。节点读取摄像头和 v13
+PyTorch 权重，发布 `vision_msgs/msg/Detection2DArray`，每个目标包含检测框、类别
+编号和置信度。包已在干净的 WSL ROS 2 工作区通过 `colcon build`，构建记录见
+`results/ros2_colcon_build_verification.txt`。
+
+```bash
+mkdir -p ~/yolo_ros2_ws/src
+cp -r ros2/yolo_detection_ros2 ~/yolo_ros2_ws/src/
+cd ~/yolo_ros2_ws
+source /opt/ros/humble/setup.bash
+colcon build --symlink-install
+source install/setup.bash
+
+ros2 run yolo_detection_ros2 detector_node --ros-args \
+  -p model_path:=/home/nvidia/jetson_yolo/best.pt \
+  -p camera_index:=0 \
+  -p mouse_conf:=0.75 \
+  -p cup_conf:=0.75
+```
+
+另开终端可验证发布内容：
+
+```bash
+source /opt/ros/humble/setup.bash
+source ~/yolo_ros2_ws/install/setup.bash
+ros2 topic echo /yolo/detections
+```
+
+当前仓库证据能证明包成功构建并注册节点；最终现场验收前仍应在已连接摄像头的
+Jetson 上保存一次 `ros2 topic echo /yolo/detections` 输出或截图，作为真实运行证据。
+
+### 英文实验报告
+
+完整英文报告包含 32 页，覆盖数据采集与清洗、YOLO11n 训练参数、ONNX 推理流程、
+Jetson 部署、20 角度统计、错误案例、ROS 2 发布设计、复现实验命令和提交清单：
+
+- `docs/Experiment_One_Object_Detection_Report.docx`
+- `docs/Experiment_One_Object_Detection_Report.pdf`
 
 ## sudo 密码
 

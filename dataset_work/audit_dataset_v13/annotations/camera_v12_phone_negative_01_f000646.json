@@ -1,0 +1,11 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [],
+  "imagePath": "camera_v12_phone_negative_01_f000646.jpg",
+  "imageData": null,
+  "imageHeight": 240,
+  "imageWidth": 462,
+  "description": "Phone hard-negative crop. Confirm that no mouse or cup remains in this image."
+}

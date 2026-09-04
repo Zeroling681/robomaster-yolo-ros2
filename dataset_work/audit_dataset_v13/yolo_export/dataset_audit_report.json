@@ -1,0 +1,43 @@
+{
+  "dataset": "F:\\PycharmProjects\\robomaster\\dataset_work\\audit_dataset_v13\\yolo_export",
+  "images_by_split": {
+    "test": 240,
+    "train": 492,
+    "val": 61
+  },
+  "boxes_by_class_id": {
+    "0": 635,
+    "1": 422
+  },
+  "negative_images": 55,
+  "scene_splits": {
+    "cup_v1": [
+      "train"
+    ],
+    "cup_v2": [
+      "train"
+    ],
+    "cup_v3": [
+      "val"
+    ],
+    "cup_video01": [
+      "test"
+    ],
+    "mouse_v1": [
+      "train"
+    ],
+    "mouse_v2": [
+      "train"
+    ],
+    "mouse_v3": [
+      "val"
+    ],
+    "mouse_video02": [
+      "test"
+    ]
+  },
+  "duplicate_content_across_splits": {},
+  "scene_leaks": {},
+  "errors": [],
+  "status": "PASS"
+}

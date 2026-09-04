@@ -1,0 +1,172 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          466.0,
+          31.0
+        ],
+        [
+          521.0,
+          31.0
+        ],
+        [
+          521.0,
+          68.0
+        ],
+        [
+          466.0,
+          68.0
+        ]
+      ],
+      "group_id": null,
+      "description": "v12 ONNX prelabel confidence=0.4520",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {
+        "prelabel": true
+      },
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "mask": null,
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          32.92335115864531,
+          157.02317290552583
+        ],
+        [
+          562.6916221033867,
+          157.02317290552583
+        ],
+        [
+          562.6916221033867,
+          347.3975044563279
+        ],
+        [
+          32.92335115864531,
+          347.3975044563279
+        ]
+      ],
+      "group_id": null,
+      "description": "v12 ONNX prelabel confidence=0.3855",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {
+        "prelabel": true
+      },
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          272.49554367201426,
+          61.479500891265594
+        ],
+        [
+          380.51693404634585,
+          61.479500891265594
+        ],
+        [
+          380.51693404634585,
+          108.18181818181814
+        ],
+        [
+          272.49554367201426,
+          108.18181818181814
+        ]
+      ],
+      "group_id": null,
+      "description": "v12 ONNX prelabel confidence=0.2951",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {
+        "prelabel": true
+      },
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          519.0,
+          57.0
+        ],
+        [
+          581.0,
+          57.0
+        ],
+        [
+          581.0,
+          99.0
+        ],
+        [
+          519.0,
+          99.0
+        ]
+      ],
+      "group_id": null,
+      "description": "v12 ONNX prelabel confidence=0.2593",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {
+        "prelabel": true
+      },
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          0.0,
+          200.0
+        ],
+        [
+          22.0,
+          200.0
+        ],
+        [
+          22.0,
+          351.0
+        ],
+        [
+          0.0,
+          351.0
+        ]
+      ],
+      "group_id": null,
+      "description": "v12 ONNX prelabel confidence=0.1476",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {
+        "prelabel": true
+      },
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v13_013_t025250.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "Initial v12 ONNX predictions only. Review every visible mouse and cup, correct inaccurate boxes, add missed horizontal cups, then mark checked."
+}

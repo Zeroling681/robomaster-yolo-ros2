@@ -1,0 +1,24 @@
+ROS 2 PACKAGE BUILD VERIFICATION
+Date: 2026-09-04
+Environment: WSL 2, Ubuntu 22.04, ROS 2 Humble
+Package: yolo_detection_ros2
+
+Commands:
+  source /opt/ros/humble/setup.bash
+  colcon build --symlink-install
+  source install/setup.bash
+  ros2 pkg executables yolo_detection_ros2
+
+Observed result:
+  Starting >>> yolo_detection_ros2
+  Finished <<< yolo_detection_ros2
+
+  Summary: 1 package finished
+
+Registered executable:
+  yolo_detection_ros2 detector_node
+
+Scope of this evidence:
+  This log proves that the package builds and that ROS 2 discovers its node.
+  A live /yolo/detections topic echo still requires the Jetson and camera to be
+  connected, so runtime publication is intentionally not claimed here.

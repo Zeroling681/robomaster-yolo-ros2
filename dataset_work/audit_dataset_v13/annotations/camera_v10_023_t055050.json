@@ -1,0 +1,70 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "cup",
+      "score": null,
+      "points": [
+        [
+          245.75757575757578,
+          106.04278074866308
+        ],
+        [
+          384.0,
+          106.04278074866308
+        ],
+        [
+          384.0,
+          479.0
+        ],
+        [
+          245.75757575757578,
+          479.0
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          385.5080213903744,
+          347.3975044563279
+        ],
+        [
+          546.2923351158645,
+          347.3975044563279
+        ],
+        [
+          546.2923351158645,
+          470.7486631016043
+        ],
+        [
+          385.5080213903744,
+          470.7486631016043
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v10_023_t055050.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": ""
+}

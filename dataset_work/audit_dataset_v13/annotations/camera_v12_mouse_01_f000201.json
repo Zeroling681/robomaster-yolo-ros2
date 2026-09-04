@@ -1,0 +1,48 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "label": "mouse",
+      "points": [
+        [
+          288,
+          115
+        ],
+        [
+          440,
+          273
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "shape_type": "rectangle",
+      "flags": {},
+      "mask": null
+    },
+    {
+      "label": "mouse",
+      "points": [
+        [
+          437,
+          84
+        ],
+        [
+          640,
+          231
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "shape_type": "rectangle",
+      "flags": {},
+      "mask": null
+    }
+  ],
+  "imagePath": "camera_v12_mouse_01_f000201.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "First-pass manual mouse boxes. Phone and other non-target objects stay unlabelled."
+}

@@ -1,0 +1,11 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [],
+  "imagePath": "v10_error_false_mouse_background_t092000.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 190,
+  "description": "Hard-negative crop from the false-positive region; the real mouse was excluded from the crop."
+}

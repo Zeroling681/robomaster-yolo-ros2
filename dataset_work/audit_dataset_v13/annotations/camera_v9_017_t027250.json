@@ -1,0 +1,71 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": true,
+  "shapes": [
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          142.632798573975,
+          268.6541889483066
+        ],
+        [
+          255.63279857397504,
+          268.6541889483066
+        ],
+        [
+          255.63279857397504,
+          343.6541889483066
+        ],
+        [
+          142.632798573975,
+          343.6541889483066
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          385.8645276292335,
+          181.97860962566844
+        ],
+        [
+          435.41889483065955,
+          181.97860962566844
+        ],
+        [
+          435.41889483065955,
+          211.92513368983956
+        ],
+        [
+          385.8645276292335,
+          211.92513368983956
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v9_017_t027250.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "Initial manual annotation from raw external-camera footage. User review required before this batch is merged into training."
+}

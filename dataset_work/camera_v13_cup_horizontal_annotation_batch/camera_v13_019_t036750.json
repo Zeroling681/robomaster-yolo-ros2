@@ -1,0 +1,73 @@
+{
+  "version": "4.0.3",
+  "flags": {},
+  "checked": false,
+  "shapes": [
+    {
+      "mask": null,
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          297.8074866310161,
+          7.647058823529417
+        ],
+        [
+          401.5508021390375,
+          7.647058823529417
+        ],
+        [
+          401.5508021390375,
+          46.862745098039206
+        ],
+        [
+          297.8074866310161,
+          46.862745098039206
+        ]
+      ],
+      "group_id": null,
+      "description": "v12 ONNX prelabel confidence=0.1388",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {
+        "prelabel": true
+      },
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "mouse",
+      "score": null,
+      "points": [
+        [
+          569.1087344028521,
+          1.2299465240641774
+        ],
+        [
+          624.7237076648842,
+          1.2299465240641774
+        ],
+        [
+          624.7237076648842,
+          34.38502673796792
+        ],
+        [
+          569.1087344028521,
+          34.38502673796792
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": {},
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "camera_v13_019_t036750.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640,
+  "description": "Initial v12 ONNX predictions only. Review every visible mouse and cup, correct inaccurate boxes, add missed horizontal cups, then mark checked."
+}
