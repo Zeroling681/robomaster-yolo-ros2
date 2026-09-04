@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATASET = ROOT / "dataset_work" / "audit_dataset_v13" / "yolo_export"
 MODEL_ARCHIVE = ROOT / "release" / "experiment_one_v13_model.zip"
 VIDEO_ARCHIVE = ROOT / "release" / "experiment_one_v13_video_evidence.zip"
+JETSON_KIT = ROOT / "release" / "experiment_one_v13_jetson_ros2_kit.zip"
 ANGLE_CSV = (
     ROOT
     / "results"
@@ -39,6 +40,8 @@ PORTABLE_PATHS = [
     "dataset_work/audit_dataset_v13/yolo_export/dataset_audit_report.json",
     "release/experiment_one_v13_model.zip",
     "release/experiment_one_v13_video_evidence.zip",
+    "release/experiment_one_v13_jetson_ros2_kit.zip",
+    "release/JETSON_ROS2_QUICKSTART.md",
     "scripts/live_camera_onnx.py",
     "scripts/live_camera_pt.py",
     "ros2/yolo_detection_ros2/package.xml",
@@ -141,6 +144,29 @@ def audit_archives(audit: Audit) -> None:
             required_video_members <= members,
             "portable video evidence archive",
             f"members={len(members)}",
+        )
+
+    required_jetson_members = {
+        "models/v13/best.pt",
+        "scripts/live_camera_pt.py",
+        "scripts/capture_jetson_ros2_evidence.sh",
+        "ros2/yolo_detection_ros2/package.xml",
+        "ros2/yolo_detection_ros2/setup.py",
+        "ros2/yolo_detection_ros2/yolo_detection_ros2/detector_node.py",
+        "release/JETSON_ROS2_QUICKSTART.md",
+    }
+    with zipfile.ZipFile(JETSON_KIT) as archive:
+        members = set(archive.namelist())
+        audit.check(
+            required_jetson_members <= members,
+            "Jetson ROS 2 evidence kit",
+            f"members={len(members)}",
+        )
+        actual_hash = archive_member_hash(archive, "models/v13/best.pt")
+        audit.check(
+            actual_hash == EXPECTED_MODEL_HASHES["best.pt"],
+            "Jetson kit model identity",
+            actual_hash,
         )
 
 

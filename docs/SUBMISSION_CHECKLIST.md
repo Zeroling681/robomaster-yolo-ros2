@@ -36,6 +36,11 @@ capture.
   `14b82fb5b50d8140cebb134f6eb1d57e07902e07a78fbdc5d033ab71d9025792`
   and `best.onnx` with SHA-256
   `42c78972a3a4f7f2a331df22a7758e9140a38d6736735391bc910cbf56f1aea0`.
+- `release/experiment_one_v13_jetson_ros2_kit.zip` contains the exact v13 PT
+  model, ROS 2 source package, Jetson detector, capture helper and a short
+  deployment guide. It is the portable package for collecting the pending
+  live hardware proof. Archive SHA-256:
+  `5bc300b6020ddd7af77bef68a929f417c4e598cd36a10af5c813d685e21f6be3`.
 
 ## Reproducible audit
 

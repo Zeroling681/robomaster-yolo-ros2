@@ -459,6 +459,10 @@ py -3.13 scripts/audit_experiment_one_submission.py --verify-git
 详细的验收条目与文件映射位于 `docs/SUBMISSION_CHECKLIST.md`。Jetson 实机 ROS 2
 消息复制回来后，再增加 `--require-jetson-ros2` 执行最终严格审计。
 
+若板子上没有保留完整项目，可以直接复制
+`release/experiment_one_v13_jetson_ros2_kit.zip`，按
+`release/JETSON_ROS2_QUICKSTART.md` 构建并采集最后的实机话题证据。
+
 ## sudo 密码
 
 用户 `tonyt` 当前不启用免密 sudo。需要自行设置密码时，在 PowerShell 中运行：

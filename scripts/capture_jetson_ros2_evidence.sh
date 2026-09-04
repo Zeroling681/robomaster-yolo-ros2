@@ -5,10 +5,15 @@
 
 set -Eeuo pipefail
 
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+project_dir="$(cd "${script_dir}/.." && pwd)"
 camera_index="${1:-0}"
-model_file="${2:-/home/nvidia/jetson_yolo/best.pt}"
-ros_workspace="${3:-/home/nvidia/yolo_ros2_ws}"
-project_dir="/home/nvidia/jetson_yolo"
+default_model="${project_dir}/models/v13/best.pt"
+if [[ -f "${project_dir}/best.pt" ]]; then
+  default_model="${project_dir}/best.pt"
+fi
+model_file="${2:-${default_model}}"
+ros_workspace="${3:-${HOME}/yolo_ros2_ws}"
 topic_name="/yolo/detections"
 timestamp="$(date +%Y%m%d_%H%M%S)"
 result_dir="${project_dir}/results"
