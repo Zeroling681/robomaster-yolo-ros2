@@ -2,8 +2,8 @@
 
 The default audit verifies every portable deliverable and reports the live
 Jetson ROS 2 capture separately. Use ``--require-jetson-ros2`` for the final
-pre-submission gate after the board has been reconnected and evidence copied
-into ``results``.
+pre-submission gate. The hardware proof may be present as a local capture or
+inside the portable Jetson evidence archive.
 """
 
 from __future__ import annotations
@@ -23,6 +23,7 @@ DATASET = ROOT / "dataset_work" / "audit_dataset_v13" / "yolo_export"
 MODEL_ARCHIVE = ROOT / "release" / "experiment_one_v13_model.zip"
 VIDEO_ARCHIVE = ROOT / "release" / "experiment_one_v13_video_evidence.zip"
 JETSON_KIT = ROOT / "release" / "experiment_one_v13_jetson_ros2_kit.zip"
+JETSON_EVIDENCE = ROOT / "release" / "experiment_one_v13_ros2_jetson_evidence.zip"
 ANGLE_CSV = (
     ROOT
     / "results"
@@ -41,6 +42,7 @@ PORTABLE_PATHS = [
     "release/experiment_one_v13_model.zip",
     "release/experiment_one_v13_video_evidence.zip",
     "release/experiment_one_v13_jetson_ros2_kit.zip",
+    "release/experiment_one_v13_ros2_jetson_evidence.zip",
     "release/JETSON_ROS2_QUICKSTART.md",
     "scripts/live_camera_onnx.py",
     "scripts/live_camera_pt.py",
@@ -169,6 +171,32 @@ def audit_archives(audit: Audit) -> None:
             actual_hash,
         )
 
+    required_jetson_evidence_members = {
+        "v13_jetson_ros2_camera_evidence.avi",
+        "v13_jetson_ros2_camera_evidence_frame.jpg",
+        "v13_ros2_runtime_evidence_20260829_193344.txt",
+        "v13_ros2_detector_20260829_193344.log",
+        "V13_JETSON_ROS2_EVIDENCE.md",
+        "SHA256SUMS.txt",
+    }
+    with zipfile.ZipFile(JETSON_EVIDENCE) as archive:
+        members = set(archive.namelist())
+        audit.check(
+            required_jetson_evidence_members <= members,
+            "Jetson ROS 2 runtime evidence archive",
+            f"members={len(members)}",
+        )
+        evidence = archive.read(
+            "v13_ros2_runtime_evidence_20260829_193344.txt"
+        ).decode("utf-8", errors="replace")
+        audit.check(
+            "Type: vision_msgs/msg/Detection2DArray" in evidence
+            and "class_id: mouse" in evidence
+            and "score: 0.9478288888931274" in evidence,
+            "archived Jetson Detection2DArray",
+            "mouse score=0.9478",
+        )
+
 
 def audit_acceptance_evidence(audit: Audit) -> None:
     with ANGLE_CSV.open("r", encoding="utf-8-sig", newline="") as stream:
@@ -243,6 +271,20 @@ def find_jetson_ros2_evidence() -> tuple[Path | None, str]:
             and ("class_id: mouse" in text or "class_id: cup" in text)
         ):
             return path, "valid live Jetson camera topic record"
+    if JETSON_EVIDENCE.is_file():
+        try:
+            with zipfile.ZipFile(JETSON_EVIDENCE) as archive:
+                evidence = archive.read(
+                    "v13_ros2_runtime_evidence_20260829_193344.txt"
+                ).decode("utf-8", errors="replace")
+            if (
+                "camera=/dev/video" in evidence
+                and "Type: vision_msgs/msg/Detection2DArray" in evidence
+                and ("class_id: mouse" in evidence or "class_id: cup" in evidence)
+            ):
+                return JETSON_EVIDENCE, "valid archived Jetson camera topic record"
+        except (KeyError, zipfile.BadZipFile):
+            pass
     return None, "run capture_jetson_ros2_evidence.sh on the connected Jetson"
 
 
@@ -282,7 +324,7 @@ def main() -> int:
         return 1
     print("\nPortable submission audit passed.")
     if jetson_path is None:
-        print("The strict hardware gate remains pending until Jetson ROS 2 evidence is copied back.")
+        print("The strict hardware gate remains pending until Jetson ROS 2 evidence is available.")
     return 0
 
 

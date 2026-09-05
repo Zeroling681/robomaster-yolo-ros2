@@ -39,19 +39,26 @@ if [[ ! -e "/dev/video${camera_index}" ]]; then
 fi
 
 mkdir -p "${result_dir}"
+# ROS-generated setup files probe optional variables and are not compatible
+# with Bash nounset. Keep strict mode everywhere else in this helper.
+set +u
 source /opt/ros/humble/setup.bash
 source "${ros_workspace}/install/setup.bash"
+set -u
 
 detector_pid=""
 stop_detector() {
-  if [[ -n "${detector_pid}" ]] && kill -0 "${detector_pid}" 2>/dev/null; then
-    kill -INT "${detector_pid}" 2>/dev/null || true
+  if [[ -n "${detector_pid}" ]]; then
+    # ros2 run may leave the Python node behind after its launcher exits. Start
+    # the command in its own session and signal the whole process group so the
+    # video writer always closes cleanly before this helper returns.
+    kill -INT -- "-${detector_pid}" 2>/dev/null || kill -INT "${detector_pid}" 2>/dev/null || true
     for _ in $(seq 1 20); do
-      kill -0 "${detector_pid}" 2>/dev/null || break
+      kill -0 -- "-${detector_pid}" 2>/dev/null || break
       sleep 0.1
     done
-    if kill -0 "${detector_pid}" 2>/dev/null; then
-      kill -TERM "${detector_pid}" 2>/dev/null || true
+    if kill -0 -- "-${detector_pid}" 2>/dev/null; then
+      kill -TERM -- "-${detector_pid}" 2>/dev/null || true
     fi
     wait "${detector_pid}" 2>/dev/null || true
   fi
@@ -71,7 +78,7 @@ trap stop_detector EXIT INT TERM
   echo
 } | tee "${evidence_file}"
 
-ros2 run yolo_detection_ros2 detector_node --ros-args \
+setsid ros2 run yolo_detection_ros2 detector_node --ros-args \
   -p model:="${model_file}" \
   -p camera:="${camera_index}" \
   -p image_size:=768 \

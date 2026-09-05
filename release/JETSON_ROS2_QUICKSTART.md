@@ -1,8 +1,8 @@
 # Jetson ROS 2 final evidence quick start
 
 This kit contains the final v13 PyTorch model, the Jetson camera detector, the
-ROS 2 Humble package and the evidence capture helper. It is intended for the
-last physical-board check in Experiment One.
+ROS 2 Humble package and the evidence capture helper. The same procedure was
+used successfully on the final physical-board check for Experiment One.
 
 ## 1. Copy and unpack
 
@@ -77,5 +77,6 @@ py -3.13 scripts/audit_experiment_one_submission.py `
   --verify-git --require-jetson-ros2
 ```
 
-After the three generated files are committed and pushed, this is the final
-runtime evidence needed to close the submission checklist.
+The completed reference capture is packaged as
+`experiment_one_v13_ros2_jetson_evidence.zip`. It records a mouse confidence
+of 0.9478 and a `/yolo/detections` rate of about 20.57 Hz on `/dev/video0`.

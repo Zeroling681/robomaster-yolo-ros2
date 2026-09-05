@@ -160,7 +160,7 @@ python -m pip install -r requirements-yolo.txt
 python scripts/check_yolo.py
 ```
 
-## v7 至 v12 训练参数
+## v7 至 v13 训练参数
 
 各版本使用的完整入口参数如下。`lr0=auto` 表示脚本不显式传入初始学习率，
 由 Ultralytics 的 `optimizer=auto` 决定。v7、v8 的 `args.yaml` 虽然记录
@@ -175,6 +175,7 @@ python scripts/check_yolo.py
 | v10 | `dataset_work/audit_dataset_v10/yolo_export/dataset.yaml` | v9 `best.pt` | 60 | 20 | 16 | 768 | `SGD` | 0.0005 | 0.01 | `mouse_cup_yolo11n_v10_clean_768` |
 | v11 | `dataset_work/audit_dataset_v11/yolo_export/dataset.yaml` | v10 `best.pt` | 30 | 10 | 16 | 768 | `SGD` | 0.0002 | 0.01 | `mouse_cup_yolo11n_v11_error_feedback_768` |
 | v12 | `dataset_work/audit_dataset_v12/yolo_export/dataset.yaml` | v11 `best.pt` | 30 | 10 | 16 | 768 | `SGD` | 0.0002 | 0.01 | `mouse_cup_yolo11n_v12_phone_hard_negative_768` |
+| v13 | `dataset_work/audit_dataset_v13/yolo_export/dataset.yaml` | v12 `best.pt` | 40 | 12 | 16 | 768 | `SGD` | 0.00015 | 0.01 | `mouse_cup_yolo11n_v13_horizontal_cup_768` |
 
 `train_yolo.py` 对所有版本统一传入以下参数：
 
@@ -192,7 +193,7 @@ python scripts/check_yolo.py
 | `project` | `runs/detect` | 训练结果根目录 |
 | `exist_ok` | `False` | 防止覆盖同名实验目录 |
 
-实际训练产生的 `args.yaml` 还记录了以下 Ultralytics 参数。当前 v10 使用
+实际训练产生的 `args.yaml` 还记录了以下 Ultralytics 参数。最终 v13 使用
 `momentum=0.937`、`weight_decay=0.0005`、`warmup_epochs=3.0`、
 `warmup_momentum=0.8`、`warmup_bias_lr=0.1`；检测损失权重为 `box=7.5`、
 `cls=0.5`、`dfl=1.5`。
@@ -205,7 +206,7 @@ CutMix 或 Copy-Paste，即 `degrees=0`、`shear=0`、`perspective=0`、
 
 ## 训练启动方式
 
-当前训练版本是 v12。在 PowerShell 中进入 WSL 后启动：
+当前最终训练版本是 v13。在 PowerShell 中进入 WSL 后启动：
 
 ```powershell
 wsl -d Ubuntu-22.04
@@ -214,14 +215,14 @@ wsl -d Ubuntu-22.04
 ```bash
 cd /mnt/f/PycharmProjects/robomaster
 source /home/tonyt/.venvs/robomaster/bin/activate
-bash scripts/train_v12_phone_hard_negative_wsl.sh
+bash scripts/train_v13_horizontal_cup_wsl.sh
 ```
 
 也可以直接从 PowerShell 用一条命令启动：
 
 ```powershell
 wsl -d Ubuntu-22.04 -- bash -lc `
-  "cd /mnt/f/PycharmProjects/robomaster && bash scripts/train_v12_phone_hard_negative_wsl.sh"
+  "cd /mnt/f/PycharmProjects/robomaster && bash scripts/train_v13_horizontal_cup_wsl.sh"
 ```
 
 需要复现历史实验时，分别运行：
@@ -233,6 +234,7 @@ bash scripts/train_v9_camera_wsl.sh
 bash scripts/train_v10_camera_wsl.sh
 bash scripts/train_v11_error_feedback_wsl.sh
 bash scripts/train_v12_phone_hard_negative_wsl.sh
+bash scripts/train_v13_horizontal_cup_wsl.sh
 ```
 
 Shell 脚本会先进入对应 YOLO 导出目录，因为 `dataset.yaml` 使用 `path: .`，
@@ -246,7 +248,7 @@ Shell 脚本会先进入对应 YOLO 导出目录，因为 `dataset.yaml` 使用 
 - `confusion_matrix.png`：验证集混淆矩阵。
 
 这些脚本中的虚拟环境和 `/mnt/f/PycharmProjects/robomaster` 路径对应当前 WSL
-部署；复制到其他电脑时，需要先修改为实际项目路径和虚拟环境位置。v9 至 v12
+部署；复制到其他电脑时，需要先修改为实际项目路径和虚拟环境位置。v9 至 v13
 是微调流程，启动前还必须确认上一版本的 `weights/best.pt` 已存在。
 
 ## 外置摄像头实时测试与录像
@@ -416,10 +418,11 @@ source ~/yolo_ros2_ws/install/setup.bash
 ros2 topic echo /yolo/detections
 ```
 
-当前仓库证据已证明包成功构建、注册节点，并在 WSL 中用最终 v13 权重和真实录像
-发布过非空的 `vision_msgs/msg/Detection2DArray`。最终现场验收前仍应在已连接摄像头的
-Jetson 上保存一次 `ros2 topic echo /yolo/detections` 输出或截图，作为实机运行证据。
-仓库提供了一键采证脚本。运行前把鼠标或杯子放入画面；参数依次为摄像头索引、
+最终 Jetson 实机取证已经完成。设备 `nvidia-desktop` 使用 `/dev/video0` 和最终 v13
+权重发布了非空的 `vision_msgs/msg/Detection2DArray`，其中鼠标置信度为 `0.9478`；
+`/yolo/detections` 实测约 `20.57 Hz`。15 秒带框录像同时显示类别、检测框、置信度、
+实时 FPS 和 `ROS 2: ON`。完整记录位于
+`release/experiment_one_v13_ros2_jetson_evidence.zip`。如需复现，参数依次为摄像头索引、
 模型路径和已构建的 ROS 2 工作区：
 
 ```bash
@@ -432,18 +435,18 @@ bash scripts/capture_jetson_ros2_evidence.sh 0 \
 脚本会验证摄像头和模型，启动检测节点，并把 topic 类型、一次包含有效目标的消息、
 topic 频率、节点日志和带框视频统一保存到 `/home/nvidia/jetson_yolo/results/`。
 
-如果 Jetson 暂未连接，可在 WSL 中用最终权重和已录视频验证同一节点的完整消息链路：
+WSL 录像回放仍可作为补充的软件链路验证：
 
 ```powershell
 wsl -d Ubuntu-22.04 -u tonyt bash `
   /mnt/f/PycharmProjects/robomaster/scripts/verify_ros2_video_runtime.sh
 ```
 
-该结果只证明模型、节点和 `vision_msgs` 消息可端到端运行，不能替代 Jetson 实机证据。
+该结果用于复现消息构造和 DDS 发布；最终硬件结论以 Jetson 实机证据包为准。
 
 ### 英文实验报告
 
-完整英文报告包含 32 页，覆盖数据采集与清洗、YOLO11n 训练参数、ONNX 推理流程、
+完整英文报告包含 33 页，并加入真实数据集标注样例页和 Ultralytics 原始训练曲线图，覆盖数据采集与清洗、YOLO11n 训练参数、ONNX 推理流程、
 Jetson 部署、20 角度统计、错误案例、ROS 2 发布设计、复现实验命令和提交清单：
 
 - `docs/Experiment_One_Object_Detection_Report.docx`
@@ -456,8 +459,12 @@ Jetson 部署、20 角度统计、错误案例、ROS 2 发布设计、复现实�
 py -3.13 scripts/audit_experiment_one_submission.py --verify-git
 ```
 
-详细的验收条目与文件映射位于 `docs/SUBMISSION_CHECKLIST.md`。Jetson 实机 ROS 2
-消息复制回来后，再增加 `--require-jetson-ros2` 执行最终严格审计。
+详细的验收条目与文件映射位于 `docs/SUBMISSION_CHECKLIST.md`。最终严格审计命令为：
+
+```powershell
+py -3.13 scripts/audit_experiment_one_submission.py `
+  --verify-git --require-jetson-ros2
+```
 
 若板子上没有保留完整项目，可以直接复制
 `release/experiment_one_v13_jetson_ros2_kit.zip`，按

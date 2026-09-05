@@ -1,8 +1,7 @@
 # Experiment One submission checklist
 
-This checklist records the evidence available on the current `main` branch and
-separates portable software evidence from the one remaining live hardware
-capture.
+This checklist records the final evidence available for Experiment One. The
+software, camera, ROS 2 and physical Jetson checks are all complete.
 
 ## Acceptance requirements
 
@@ -20,8 +19,8 @@ capture.
 | Save results and typical errors | Annotated/raw recording support, score CSV and evidence sheets | Complete |
 | ROS 2 publisher implementation | `ros2/yolo_detection_ros2/` | Complete |
 | ROS 2 runtime message path | Stored WSL `Detection2DArray`, cup confidence 0.8217, about 35 Hz | Complete |
-| ROS 2 publication on Jetson camera | Live `ros2 topic echo` copied from the board | **Pending** |
-| English experiment report | 32-page DOCX and PDF in `docs/` | Complete |
+| ROS 2 publication on Jetson camera | `/dev/video0`; mouse confidence 0.9478; `/yolo/detections` about 20.57 Hz | Complete |
+| English experiment report | 33-page DOCX and PDF with labelled dataset samples and original Ultralytics training curves | Complete |
 
 ## Portable archives
 
@@ -38,26 +37,22 @@ capture.
   `42c78972a3a4f7f2a331df22a7758e9140a38d6736735391bc910cbf56f1aea0`.
 - `release/experiment_one_v13_jetson_ros2_kit.zip` contains the exact v13 PT
   model, ROS 2 source package, Jetson detector, capture helper and a short
-  deployment guide. It is the portable package for collecting the pending
-  live hardware proof. Archive SHA-256:
-  `5bc300b6020ddd7af77bef68a929f417c4e598cd36a10af5c813d685e21f6be3`.
+  deployment guide. Archive SHA-256:
+  `020718540a31b41c061cdece31dc419c6bea4412a8f028d2b771b4900354e89c`.
+- `release/experiment_one_v13_ros2_jetson_evidence.zip` contains the final
+  annotated Jetson camera clip, representative frame, detector log, non-empty
+  `Detection2DArray` topic record and file checksums. Archive SHA-256:
+  `8fe7bf7b4a57bf58e27676fd062099a4606ca87459e3eefaa75485e31a088e75`.
 
 ## Reproducible audit
 
-Run the portable audit before copying the submission:
-
-```powershell
-py -3.13 scripts/audit_experiment_one_submission.py --verify-git
-```
-
-After reconnecting the Jetson, capture the final hardware record, copy the
-generated TXT/log/video into `results/`, then run the strict gate:
+Run the final strict audit before copying the submission:
 
 ```powershell
 py -3.13 scripts/audit_experiment_one_submission.py `
   --verify-git --require-jetson-ros2
 ```
 
-The strict audit is intentionally not declared complete until the repository
-contains a live Jetson camera topic record with a non-empty mouse or cup
-`vision_msgs/msg/Detection2DArray`.
+The strict audit requires the portable evidence archive to be on `origin/main`
+and verifies that it contains a non-empty mouse or cup
+`vision_msgs/msg/Detection2DArray` from a Jetson camera.

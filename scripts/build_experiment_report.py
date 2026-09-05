@@ -149,6 +149,72 @@ def create_dataset_chart(path: Path) -> None:
     canvas.save(path, quality=95)
 
 
+def create_dataset_sample_sheet(path: Path) -> None:
+    """Render real v13 images together with their audited YOLO boxes."""
+    samples = [
+        ("train", "new_mouse_angle_01", "Mouse: low side view"),
+        ("train", "new_mouse_angle_07", "Mouse: underside view"),
+        ("train", "camera_v13_023_t043850", "Cup: fully horizontal"),
+        ("train", "v10_error_missed_cup_mouse_t090000", "Recovered miss: blur and two targets"),
+        ("val", "cup_v3_003_t004100", "Validation: cup with background targets"),
+        ("train", "camera_v12_phone_negative_05_f001171", "Hard negative: phone, empty label"),
+    ]
+    class_names = {0: "mouse", 1: "cup"}
+    class_colours = {0: "#20A464", 1: "#2D6A9F"}
+    canvas = Image.new("RGB", (1800, 1460), "white")
+    draw = ImageDraw.Draw(canvas)
+    draw.text((70, 35), "Examples from the Audited Version 13 Dataset", fill="#111111", font=font(48, True))
+    draw.text((70, 98), "Green = mouse   Blue = cup   Grey = deliberate background sample", fill="#444444", font=font(25))
+
+    card_w, card_h = 815, 390
+    image_w, image_h = 775, 315
+    for index, (split, stem, caption) in enumerate(samples):
+        column, row = index % 2, index // 2
+        x = 70 + column * 865
+        y = 155 + row * 425
+        draw.rounded_rectangle((x, y, x + card_w, y + card_h), radius=18, fill="#F5F7F9", outline="#D4D9DE", width=3)
+
+        image_path = DATASET / "images" / split / f"{stem}.jpg"
+        label_path = DATASET / "labels" / split / f"{stem}.txt"
+        sample = Image.open(image_path).convert("RGB")
+        source_w, source_h = sample.size
+        scale = min(image_w / source_w, image_h / source_h)
+        display_w = max(1, int(source_w * scale))
+        display_h = max(1, int(source_h * scale))
+        sample = sample.resize((display_w, display_h), Image.Resampling.LANCZOS)
+        image_x = x + 20 + (image_w - display_w) // 2
+        image_y = y + 18 + (image_h - display_h) // 2
+        canvas.paste(sample, (image_x, image_y))
+
+        label_lines = [line for line in label_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        for line in label_lines:
+            class_id, cx, cy, width, height = line.split()[:5]
+            class_id = int(class_id)
+            cx, cy, width, height = map(float, (cx, cy, width, height))
+            x1 = image_x + int((cx - width / 2) * display_w)
+            y1 = image_y + int((cy - height / 2) * display_h)
+            x2 = image_x + int((cx + width / 2) * display_w)
+            y2 = image_y + int((cy + height / 2) * display_h)
+            colour = class_colours[class_id]
+            draw.rectangle((x1, y1, x2, y2), outline=colour, width=6)
+            name = class_names[class_id]
+            text_box = draw.textbbox((0, 0), name, font=font(22, True))
+            text_w = text_box[2] - text_box[0]
+            text_h = text_box[3] - text_box[1]
+            label_y = max(image_y, y1 - text_h - 10)
+            draw.rectangle((x1, label_y, x1 + text_w + 14, label_y + text_h + 10), fill=colour)
+            draw.text((x1 + 7, label_y + 3), name, fill="white", font=font(22, True))
+
+        status = f"{split} | {len(label_lines)} box{'es' if len(label_lines) != 1 else ''}"
+        if not label_lines:
+            status = f"{split} | empty label"
+        draw.text((x + 22, y + 342), caption, fill="#1F2529", font=font(24, True))
+        status_box = draw.textbbox((0, 0), status, font=font(21))
+        status_w = status_box[2] - status_box[0]
+        draw.text((x + card_w - status_w - 22, y + 344), status, fill="#626B73", font=font(21))
+    canvas.save(path, quality=95)
+
+
 def create_requirement_chart(path: Path) -> None:
     canvas = Image.new("RGB", (1800, 770), "white")
     draw = ImageDraw.Draw(canvas)
@@ -293,7 +359,7 @@ class Report:
         title.alignment = WD_ALIGN_PARAGRAPH.LEFT
         title.add_run("Experiment One\nObject Detection and Recognition")
         subtitle = self.document.add_paragraph()
-        subtitle.add_run("A two class mouse and cup detector trained with an audited dataset and deployed on Jetson with ROS 2 output").italic = True
+        subtitle.add_run("Training and deploying a mouse-and-cup detector on Jetson").italic = True
         subtitle.runs[0].font.size = Pt(15)
         subtitle.runs[0].font.color.rgb = RGBColor(60, 65, 70)
         self.document.add_paragraph("\n")
@@ -406,6 +472,7 @@ def build() -> None:
     ASSETS.mkdir(parents=True, exist_ok=True)
     create_pipeline_diagram(ASSETS / "workflow.png")
     create_dataset_chart(ASSETS / "dataset_splits.png")
+    create_dataset_sample_sheet(ASSETS / "dataset_samples.png")
     create_requirement_chart(ASSETS / "acceptance_results.png")
     split_evidence_sheet(
         REVIEW / "v13_20_angle_evidence_with_horizontal_cup.jpg",
@@ -422,14 +489,14 @@ def build() -> None:
     report.cover()
 
     report.heading("Executive Summary")
-    report.p("I built a two class detector for computer mice and drinking cups, with the complete route from data capture to Jetson deployment. The final version is YOLO11n v13. It was fine tuned at an input size of 768 pixels and exported as both PyTorch and ONNX weights. The live program draws the class name, bounding box, confidence and smoothed frame rate, while an added ROS 2 node publishes the same detections as vision_msgs messages.")
-    report.p("The final exported dataset contains 793 images: 492 training images, 61 validation images and 240 held out test images. The training partition contains 49 empty label files that intentionally act as hard negative samples. These negatives were important because earlier models often treated black phones, chair backs, robot shells and laptop edges as mice. Version 13 adds eighty manually reviewed frames, mainly horizontal cups, new backgrounds and difficult mouse poses.")
-    report.p("For the practical acceptance check, I selected twenty clearly different viewing conditions. Eighteen scenes passed the strict rule that every expected target must be detected and no extra false box may appear. The resulting scene accuracy is 90 percent, which exceeds the required 80 percent. Eighteen selected scenes come directly from Jetson recordings. Two horizontal cup scenes come from a v13 ONNX replay of the original raw capture; they were added because the older CUP3 clip was upright and unsuccessful, so it could not prove horizontal cup recognition.")
-    report.p("The selected Jetson evidence frames show reported speeds from 15.7 to 21.2 FPS, with a mean of about 17.9 FPS. This is comfortably above the required 5 FPS. I also completed a ROS 2 Humble package named yolo_detection_ros2. A recorded-video integration run published a real Detection2DArray containing a horizontal cup at 0.822 confidence, while the measured topic rate stayed near 35 Hz in WSL. A Jetson topic echo remains the correct final classroom hardware proof, so I keep that distinction explicit.")
+    report.p("This project started as a simple mouse-and-cup detector, but the first live tests exposed problems that were not obvious from the training numbers. Black phones and robot parts were sometimes called mice, side-view mice were missed, and the cup only worked reliably while upright. I kept those failures and used them to decide what to collect next. The final model is YOLO11n v13, trained at 768 pixels and exported as both PyTorch and ONNX weights.")
+    report.p("The final export contains 793 images: 492 for training, 61 for validation and 240 for testing. The training split includes 49 empty label files on purpose. They show phones, chair backs, robot shells, laptop edges and other objects that caused false mouse detections. Version 13 also adds eighty manually checked frames, with most of the new positive examples covering cups lying on their side and mouse poses that had previously failed.")
+    report.p("I checked twenty different viewing conditions for the classroom test. A scene only counted as correct when every expected object was found and there was no extra box. Eighteen of the twenty scenes passed, so the final score is 90 percent. Eighteen scenes are taken from Jetson recordings. The other two are horizontal-cup frames replayed through the final v13 ONNX model because the older CUP3 clip was upright and did not detect the cup.")
+    report.p("The selected Jetson frames show 15.7 to 21.2 FPS, averaging about 17.9 FPS. The ROS 2 test was also run on the physical board: /dev/video0 produced a mouse detection at 0.9478 confidence, and /yolo/detections was measured at about 20.57 Hz. The live display and the ROS 2 message therefore came from the same working detection path.")
     report.figure(ASSETS / "acceptance_results.png", "Figure 1  Summary of the measured acceptance results", 6.9)
 
     report.page("1 Requirements and Evidence")
-    report.p("I treated the assessment sheet as a checklist rather than a general description. This helped prevent a common problem in vision experiments: a model may look good in a few pictures while one of the actual requirements has never been tested. The table below links each requirement to a concrete file or observation.")
+    report.p("Before preparing the final files, I copied each item from the assessment sheet into a checklist. The table below records what I used as evidence for each item. This caught one missing item early: an upright cup video could not be used to prove that a cup lying flat was recognised.")
     report.table(
         ["Requirement", "Evidence", "Status"],
         [
@@ -440,11 +507,11 @@ def build() -> None:
             ["Twenty angles at 80 percent", "18 correct scenes from 20 selected scenes", "Met at 90 percent"],
             ["At least 5 FPS on Jetson", "15.7 to 21.2 FPS in selected Jetson frames", "Met"],
             ["Save results and errors", "Annotated and raw video outputs plus review frames", "Met"],
-            ["ROS 2 detection publishing", "Built package and saved a non-empty WSL topic message", "Runtime verified; Jetson echo pending"],
+            ["ROS 2 detection publishing", "Jetson camera Detection2DArray, mouse 0.9478, about 20.57 Hz", "Met"],
         ],
         [2.0, 3.8, 1.2],
     )
-    report.p("The distinction between software evidence and hardware evidence matters for ROS 2. The package compiles in Ubuntu 22.04 ROS 2 Humble and the repository now stores a real topic echo produced by the final v13 model during recorded-video replay. That run proves message construction and DDS publication, but it is not labelled as Jetson proof. A short topic echo captured on the connected board is still the final hardware check.")
+    report.p("The package first passed a recorded-video replay in WSL, which checked message construction and DDS publication. I then repeated the full path on the physical Jetson with its camera. The final evidence package contains the annotated AVI, a representative frame, the detector log and a non-empty topic record. Keeping both runs makes the software test and the hardware acceptance test independently reproducible.")
     report.bullets([
         "Accuracy is scene based because the teacher accepted twenty angles rather than twenty unique object instances.",
         "The horizontal cup evidence is included as an explicit supplement and not mixed into the Jetson FPS calculation.",
@@ -452,7 +519,7 @@ def build() -> None:
     ])
 
     report.page("2 System Design")
-    report.p("The project is organised as a feedback loop. I first collect short videos or still images, extract representative frames, create or correct bounding boxes, audit the labels, export a deterministic YOLO directory, train a new model version, and then test it on a live camera. Wrong predictions are not simply discarded. They are converted into the next training batch: missed targets become positive samples after manual annotation, while false alarms become empty label hard negatives.")
+    report.p("My working cycle was: record a short video, keep representative frames, correct the boxes in X AnyLabeling, run the audit, export the YOLO folders, train, and test again with the camera. When the model made a mistake, I saved that frame. A missed object became a positive sample after I drew the box; a false alarm became an empty-label negative sample.")
     report.figure(ASSETS / "workflow.png", "Figure 2  Data training deployment and error feedback workflow", 6.9)
     report.p("This workflow explains why the project progressed through several versions. Each version addressed a specific failure rather than changing the model architecture at random. Versions 9 and 10 improved camera domain coverage. Version 11 added frames taken from missed and false detections. Version 12 included phones as difficult negative examples because phones were often predicted as mice. Version 13 concentrated on horizontal cups and additional poses.")
     report.p("The output side has two parallel paths. The Windows path uses ONNX Runtime and is convenient for camera testing and data capture. The Jetson path uses the PyTorch best.pt weight with CUDA through Ultralytics. The ROS 2 node wraps the Jetson prediction result in standard vision_msgs structures so other robot nodes can consume the class, confidence and bounding box without parsing screen graphics.")
@@ -489,7 +556,7 @@ def build() -> None:
     report.p("I reviewed model generated prelabels manually in X AnyLabeling. Prelabels accelerated the first pass, but they were never treated as ground truth automatically. I corrected missing objects, removed boxes around phones and robot bodies, and checked that boxes did not extend outside the image. Two v13 boxes near image borders were clipped during export, and the audit report contains no fatal errors.")
 
     report.page("5 Data Collection Strategy")
-    report.p("The earliest data came from phone videos and nearby camera views. That produced many frames, but adjacent frames were often nearly identical. A large number of similar frames can make the dataset look bigger without adding new information. Later collection sessions therefore focused on meaningful changes: front and side views, high and low camera positions, rotations, partial hand occlusion, changes in distance, new backgrounds and difficult objects that had caused false alarms.")
+    report.p("At first I extracted too many neighbouring frames from phone videos. The image count increased, but many frames showed almost the same pose and background. In the later sessions I collected fewer, more useful differences: front and side views, high and low camera positions, rotation, hand occlusion, distance changes, new desks and the black objects that had triggered false boxes.")
     report.p("The horizontal cup session was recorded specifically after the assessment requirement changed. It includes a cup lying fully on its side, movement across the table and several backgrounds. Eighty representative frames were selected and manually reviewed for version 13. The original raw video was kept so that the final model could later be replayed on exactly the captured sequence.")
     report.bullets([
         "Positive diversity included upright cups, horizontal cups, blue and green cups, mouse top views, side profiles and underside views.",
@@ -500,7 +567,7 @@ def build() -> None:
     report.p("The final twenty angle test is separate from the training set audit. It is a practical demonstration rather than a substitute for the held out test partition. Both forms of evaluation are needed: the image split produces repeatable numerical metrics, and the live sequence shows whether the program behaves acceptably during actual use.")
 
     report.page("6 Dataset Cleaning and Audit")
-    report.p("Several model failures were traced to data quality rather than the neural network design. A file named hard_robot_mouse originally suggested a mouse but contained no visible mouse; after manual inspection it was intentionally retained as a negative. A laptop negative sample contained a partial cup at the left edge, so that cup was labelled. The export script was also corrected so train_candidate and not_assigned rows could not silently enter the training set.")
+    report.p("The audit found several ordinary labelling mistakes. hard_robot_mouse had a misleading filename but no real mouse, so I kept it as a negative. neg_laptop did contain part of a cup at the left edge, so I added that cup box. I also found that the first export script silently treated train_candidate and not_assigned as training data. I changed the script so only explicit train, val and test rows are exported.")
     report.p("The audit process performs structural checks before training. It verifies that every exported image has one matching label file, class IDs are valid, normalised coordinates are within range, box width and height are positive, and the train validation and test lists do not contain the same file. It also produces an exclusion list so rejected or unassigned samples remain visible for later review rather than disappearing.")
     report.table(
         ["Audit check", "Reason", "v13 outcome"],
@@ -529,6 +596,11 @@ def build() -> None:
     report.figure(ASSETS / "dataset_splits.png", "Figure 3  Exported train validation and test image counts", 6.7)
     report.p("The test partition is relatively large because it preserves independent original scenes and is reused for comparison between model versions. The training partition is smaller than the raw audit store because 461 audit records are explicitly excluded. This is preferable to increasing the count with uncertain or duplicate samples.")
 
+    report.page("Dataset Sample Gallery")
+    report.p("These are actual images from the exported v13 folders. The boxes are drawn from the matching YOLO label files, not from model predictions. I selected them to show the cases that mattered during development: a normal mouse, its underside, a cup lying flat, a blurred two-object recovery sample, a validation scene and a phone kept as background.")
+    report.figure(ASSETS / "dataset_samples.png", "Plate 1  Real v13 images with audited ground-truth boxes", 7.0)
+    report.p("The phone card has no box because it is a deliberate hard negative. This is how the dataset tells the model that a dark rectangular object is not automatically a mouse. The blurred card is included because it came from a real failure, not because it is visually clean.")
+
     report.page("8 Dataset Version History")
     report.table(
         ["Version", "Primary change", "Reason"],
@@ -543,7 +615,7 @@ def build() -> None:
         ],
         [0.8, 3.0, 3.3],
     )
-    report.p("This version history is useful because model performance did not improve monotonically on every metric. Version 13 specialised the model for a new pose, but its held out test mAP was slightly lower than version 12. That is not hidden in this report. The practical v13 acceptance test nevertheless passed the required threshold, and the horizontal cup supplement demonstrates the new behaviour that motivated the version.")
+    report.p("The version number increased only after a new data batch or a specific correction. The metrics did not rise every time. In fact, v13 has slightly lower held-out mAP than v12, but it recognises the horizontal cup pose that v12 lacked. I kept v13 for the final demonstration because that pose was part of the teacher's requirement and the twenty-angle test still passed.")
     report.p("Keeping separate version folders and training scripts makes the experiment reproducible. It also prevents a good weight file from being overwritten by a later trial. Each training output has args.yaml, results.csv, plots and best and last weights. This structure allowed me to trace exactly which dataset and starting weight produced the final model.")
 
     report.page("9 Model Choice and Architecture")
@@ -604,9 +676,9 @@ def build() -> None:
     report.p("Augmentation changes image appearance and placement, but it cannot create a truly new three dimensional viewpoint. This was an important lesson from the mouse failures. Rotating a top view by twelve degrees is still a top view; it does not become a side or underside image. Real collection remained necessary even after aggressive augmentation.")
 
     report.page("12 Training Results")
-    report.p(f"The best validation mAP50 to 95 occurred at epoch {metrics['epoch']}. At that point precision was {metrics['precision']:.3f}, recall was {metrics['recall']:.3f}, mAP50 was {metrics['map50']:.3f}, and mAP50 to 95 was {metrics['map5095']:.3f}. The training plot shows an early period of improvement followed by a late validation decline, so using best.pt instead of last.pt is essential.")
+    report.p(f"The best validation mAP50 to 95 occurred at epoch {metrics['epoch']}. At that point precision was {metrics['precision']:.3f}, recall was {metrics['recall']:.3f}, mAP50 was {metrics['map50']:.3f}, and mAP50 to 95 was {metrics['map5095']:.3f}. I used best.pt for deployment instead of assuming that the last epoch was best.")
     report.figure(RUN / "results.png", "Figure 4  Version 13 training and validation curves", 7.0)
-    report.p("The late decline is consistent with a small fine tuning set. Training losses remain noisy because the training set contains varied hard negatives and relatively few images per batch. The validation losses rise after the best region, which suggests increasing specialisation. Early stopping and best checkpoint selection limit the damage, but more independent horizontal cup scenes would be a better long term solution.")
+    report.p("Figure 4 is the original results.png written by Ultralytics during the v13 run; it has not been redrawn for this report. The left-side plots show box, classification and DFL losses, while the right-side plots show precision, recall and mAP. The validation curves worsen after the best region even though some training losses continue to fall. That is why I kept the checkpoint from the best validation epoch. More independent horizontal-cup scenes would be more useful than simply adding epochs.")
 
     report.page("13 Validation Analysis")
     report.p("The normalised confusion matrix gives a class focused view. About 0.80 of true mouse instances are classified as mouse, while about 0.85 of true cup instances are classified as cup. Background related false positives remain visible, especially for mouse. This matches live testing: small dark objects are more likely to be confused with a mouse than with a cup.")
@@ -690,8 +762,9 @@ def build() -> None:
     report.p("Each Detection2D message contains a bounding box centre, width and height, a text class ID and a floating point confidence score. The array header contains the camera frame name and ROS time. A receiving robot node can subscribe to /yolo/detections and make decisions without reading pixels or parsing console output.")
     report.code("cd ~/yolo_ros2_ws\nsource /opt/ros/humble/setup.bash\ncolcon build --symlink-install\nsource install/setup.bash\nros2 launch yolo_detection_ros2 detector.launch.py")
     report.code("ros2 topic info /yolo/detections\nros2 topic echo /yolo/detections --once\nros2 topic hz /yolo/detections")
-    report.p("I verified the package with colcon build in Ubuntu 22.04, and ROS 2 lists the detector_node executable. I then replayed the horizontal-cup result through the same node. The saved topic record reports one publisher of type vision_msgs/msg/Detection2DArray and contains a cup box with confidence 0.8217. The observed WSL topic rate was about 34 to 35 Hz. This proves the message path at runtime; the Jetson camera echo remains a separate hardware acceptance record.")
-    report.code("wsl -d Ubuntu-22.04 -u tonyt bash /mnt/f/PycharmProjects/robomaster/scripts/verify_ros2_video_runtime.sh\n# Evidence: results/ros2_v13_wsl_video_runtime_evidence.txt")
+    report.p("I verified the package with colcon build in Ubuntu 22.04, and ROS 2 lists the detector_node executable. A WSL replay produced a cup message at 0.8217 confidence and about 35 Hz. The final hardware run then started the same package on nvidia-desktop with /dev/video0. Its saved topic record reports one publisher of type vision_msgs/msg/Detection2DArray, a mouse box at 0.9478 confidence and a measured rate of about 20.57 Hz.")
+    report.figure(REVIEW / "v13_jetson_ros2_camera_evidence.jpg", "Figure 9  Final Jetson camera run with detection overlay and ROS 2 publishing enabled", 5.3)
+    report.code("bash scripts/capture_jetson_ros2_evidence.sh 0 models/v13/best.pt ~/yolo_ros2_ws\n# Portable proof: release/experiment_one_v13_ros2_jetson_evidence.zip")
 
     report.page("23 Saving Results and Typical Errors")
     report.p("The experiment saves three useful forms of evidence. Annotated AVI files show the visible output expected by the teacher. Raw AVI files preserve the original camera frames for later replay. Review directories contain contact sheets, selected still frames, CSV scoring tables and JSON run summaries. Together they support both demonstration and diagnosis.")
@@ -732,7 +805,7 @@ def build() -> None:
     report.heading("25 5 ROS 2 Build", 2)
     report.code("mkdir -p ~/yolo_ros2_ws/src\ncp -r ros2/yolo_detection_ros2 ~/yolo_ros2_ws/src/\ncd ~/yolo_ros2_ws\nsource /opt/ros/humble/setup.bash\ncolcon build --symlink-install")
     report.heading("25 6 ROS 2 Runtime Verification", 2)
-    report.code("wsl -d Ubuntu-22.04 -u tonyt bash /mnt/f/PycharmProjects/robomaster/scripts/verify_ros2_video_runtime.sh")
+    report.code("bash scripts/capture_jetson_ros2_evidence.sh 0 /home/nvidia/jetson_yolo/models/v13/best.pt /home/nvidia/yolo_ros2_ws\n# Verify on the PC:\npy -3.13 scripts/audit_experiment_one_submission.py --verify-git --require-jetson-ros2")
 
     report.page("26 Submission Artifact Inventory")
     report.table(
@@ -743,7 +816,7 @@ def build() -> None:
             ["ONNX model", "runs detect mouse_cup_yolo11n_v13_horizontal_cup_768 weights best.onnx"],
             ["Windows program", "scripts live_camera_onnx.py"],
             ["Jetson program", "scripts live_camera_pt.py"],
-            ["ROS 2 package and proof", "ros2 yolo_detection_ros2 and results ros2_v13_wsl_video_runtime_evidence.txt"],
+            ["ROS 2 package and proof", "ros2 yolo_detection_ros2 and release experiment_one_v13_ros2_jetson_evidence.zip"],
             ["Jetson videos", "results v13 Jetson camera1 detected files"],
             ["Horizontal cup video", "results v13_horizontal_cup_success_detected.avi"],
             ["Twenty angle score", "results v13_submission_review v13_20_angle_results_with_horizontal_cup.csv"],
@@ -764,15 +837,16 @@ def build() -> None:
             ["v13 best.pt", str(best_pt.stat().st_size), sha256(best_pt)],
             ["v13 best.onnx", str(best_onnx.stat().st_size), sha256(best_onnx)],
             ["horizontal cup video", str(horizontal_video.stat().st_size), sha256(horizontal_video)],
+            ["Jetson ROS 2 evidence ZIP", str((ROOT / "release/experiment_one_v13_ros2_jetson_evidence.zip").stat().st_size), sha256(ROOT / "release/experiment_one_v13_ros2_jetson_evidence.zip")],
         ],
         [1.5, 1.2, 4.4],
     )
     report.p("A checksum does not prove accuracy, but it prevents accidental substitution of a different model after the report is written. It is especially useful here because several version folders contain files named best.pt.")
 
     report.page("28 Conclusion")
-    report.p("This experiment produced a complete two class object detection workflow for mouse and cup recognition. I collected and reviewed data, converted the annotations into YOLO format, trained a sequence of models, analysed real camera errors, and refined the dataset with targeted positives and hard negatives. The final v13 model adds the horizontal cup pose that was missing from earlier evidence.")
-    report.p("The practical twenty angle evaluation records eighteen correct scenes out of twenty, which is 90 percent and exceeds the required 80 percent. Jetson evidence runs between 15.7 and 21.2 FPS in the selected frames, safely above the 5 FPS requirement. The result videos display the target class, bounding box, confidence and FPS, and the program can store both annotated and raw streams.")
-    report.p("The ROS 2 package publishes standard Detection2DArray messages, has passed a clean colcon build and has produced a stored non-empty cup message during an end-to-end WSL replay. The remaining best practice before the classroom demonstration is to run ros2 topic echo once on the connected Jetson and retain that console capture. The report does not hide this distinction. Overall, the submission demonstrates the path from imperfect raw footage to a reproducible embedded detector, while keeping the two remaining mouse misses visible as honest limits of the current dataset.")
+    report.p("The final v13 model can detect a mouse and a cup in the same camera frame, including a cup lying flat. The most useful part of the work was not changing the network; it was keeping the bad predictions, correcting the labels and collecting the missing poses. The phone negatives and the horizontal-cup batch came directly from problems seen during live testing.")
+    report.p("In the twenty-angle check, 18 scenes passed and 2 mouse views failed, giving 90 percent. The selected Jetson frames run from 15.7 to 21.2 FPS, above the required 5 FPS. The saved videos show the class, box, confidence and FPS, and the program can also keep the raw stream for later replay.")
+    report.p("The ROS 2 package built and ran on the Jetson. Its stored topic output contains a mouse detection at 0.9478 confidence and a measured publish rate of about 20.57 Hz. The two missed mouse views are still included in the evidence. If I continue the project, the next data batch should focus on extreme side and underside views rather than adding more ordinary top views.")
 
     report.page("Appendix A Key Source Code Responsibilities")
     report.table(
@@ -790,7 +864,7 @@ def build() -> None:
     report.p("The live inference file separates small functions such as letterbox and postprocess from the camera loop. This made offline video replay possible without copying the mathematical code. The ROS 2 node uses Ultralytics results directly because Jetson already has that framework installed. Both paths keep the same class order and deployment thresholds.")
 
     report.page("Appendix B Final Evidence Paths")
-    report.code("results/v13_submission_review/v13_20_angle_evidence_with_horizontal_cup.jpg\nresults/v13_submission_review/v13_20_angle_results_with_horizontal_cup.csv\nresults/v13_horizontal_cup_success_detected.avi\nresults/v13_horizontal_cup_success_detected.json\nresults/v13_Jetson_camera1_detected_mouseCUP.avi\nresults/v13_Jetson_camera1_detected_cupboth.avi\nresults/v13_Jetson_camera1_detected_mouse1.avi")
+    report.code("results/v13_submission_review/v13_20_angle_evidence_with_horizontal_cup.jpg\nresults/v13_submission_review/v13_20_angle_results_with_horizontal_cup.csv\nresults/v13_horizontal_cup_success_detected.avi\nresults/v13_horizontal_cup_success_detected.json\nresults/v13_Jetson_camera1_detected_mouseCUP.avi\nrelease/experiment_one_v13_ros2_jetson_evidence.zip\nrelease/experiment_one_v13_video_evidence.zip\nrelease/experiment_one_v13_model.zip")
     report.p("The older v13_Jetson_camera1_detected_CUP3.avi file is not part of the final proof. It remains in the working results directory only as historical test material. The curated CSV and evidence sheet do not reference it.")
     report.p("This report was generated from the current local workspace so that tables and integrity hashes match the files submitted with the experiment.")
 
