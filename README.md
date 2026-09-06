@@ -331,7 +331,7 @@ bash scripts/capture_jetson_ros2_evidence.sh 0 \
 - `release/experiment_one_v13_video_evidence.zip`：检测视频、20 角度记录和证据图。
 - `release/experiment_one_v13_jetson_ros2_kit.zip`：Jetson 模型、检测程序、ROS 2 包和快速指南。
 - `release/experiment_one_v13_ros2_jetson_evidence.zip`：ROS 2 话题、日志、FPS 和板端视频证据。
-- `release/experiment_one_complete_submission_v13.zip`：数据集、模型、程序、结果视频、运行说明和实验报告的一体化提交包（Git LFS）。
+- [v13 一体化提交包（ZIP，332 MB）](https://github.com/Zeroling681/robomaster-yolo-ros2/releases/download/v13-complete-submission/experiment_one_complete_submission_v13.zip)：数据集、模型、程序、结果视频、运行说明和实验报告。
 
 每个压缩包的内容和 SHA-256 校验和见 `release/README.md`；Jetson 操作步骤见
 `release/JETSON_ROS2_QUICKSTART.md`。

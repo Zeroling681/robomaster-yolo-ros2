@@ -9,7 +9,7 @@ Git LFS is unavailable on a classroom computer.
 | `experiment_one_v13_video_evidence.zip` | two-class Jetson video, 13-second horizontal-cup video, score CSV, two evidence sheets and JSON summary | `19100ab32796548cce63295e02e6eff226aea102ea2d081e779ccac06adb98d6` |
 | `experiment_one_v13_jetson_ros2_kit.zip` | final PT model, Jetson detector, ROS 2 package, capture helper and quick-start guide | `020718540a31b41c061cdece31dc419c6bea4412a8f028d2b771b4900354e89c` |
 | `experiment_one_v13_ros2_jetson_evidence.zip` | final Jetson camera AVI, overlay frame, non-empty ROS 2 message, rate capture, log and checksums | `8fe7bf7b4a57bf58e27676fd062099a4606ca87459e3eefaa75485e31a088e75` |
-| `experiment_one_complete_submission_v13.zip` | audited dataset, v13 PT/ONNX model, programs, result videos, run instructions and final report | `51c018fa86870b98efa53ce23504e5b3d7c9f60da951dda782c81d2bcafd2d1f` |
+| [experiment_one_complete_submission_v13.zip](https://github.com/Zeroling681/robomaster-yolo-ros2/releases/download/v13-complete-submission/experiment_one_complete_submission_v13.zip) | audited dataset, v13 PT/ONNX model, programs, result videos, run instructions and final report | `51c018fa86870b98efa53ce23504e5b3d7c9f60da951dda782c81d2bcafd2d1f` |
 
 The audited v13 dataset is stored directly under
 `dataset_work/audit_dataset_v13/`. The final English report is available in
